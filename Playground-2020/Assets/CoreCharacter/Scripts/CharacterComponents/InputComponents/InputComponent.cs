@@ -12,20 +12,23 @@ namespace CoreCharacter
         private Action onActionJump;
         private Action onAction1;
         private Action onAction2;
+        private Action onAction3;
 
         public Action<Vector3> OnActionMove { get => onMovementInput; set => onMovementInput = value; }
         public Action<Vector2> OnActionRotate { get => onRotationInput; set => onRotationInput = value; }
         public Action OnActionJump { get => onActionJump; set => onActionJump = value; }
         public Action OnAction1 { get => onAction1; set => onAction1 = value; }
         public Action OnAction2 { get => onAction2; set => onAction2 = value; }
+        public Action OnAction3 { get => onAction3; set => onAction3 = value; }
 
         private void Update()
         {
             HandleMovement();
             //HandleRotation();
-            HandleAction(Input.GetButtonDown("Jump"), onActionJump);
+            HandleAction(Input.GetButtonDown("Fire1"), onActionJump);
             HandleAction(Input.GetButtonDown("Fire3"), onAction1);
             HandleAction(Input.GetButtonDown("Fire2"), onAction2);
+            HandleAction(Input.GetButtonDown("Jump"), onAction3);
         }
 
         public override void SetUp(CharacterControl character)
