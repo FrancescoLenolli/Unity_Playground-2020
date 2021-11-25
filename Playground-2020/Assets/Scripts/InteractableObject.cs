@@ -21,7 +21,7 @@ public class InteractableObject : MonoBehaviour
         bool isPlayerInRange = CharacterUtilities.IsTargetInRange(transform, player.transform, playerInteraction.GetRange());
         bool canInteract = isPlayerInRange && Input.GetButtonDown("Jump");
 
-        Debug.Log(isPlayerInRange);
+        //Debug.Log(isPlayerInRange);
 
         if (canInteract)
             Interact();
