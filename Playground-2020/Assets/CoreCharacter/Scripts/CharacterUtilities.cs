@@ -92,10 +92,22 @@ namespace CoreCharacter.Utilities
             return offset.sqrMagnitude;
         }
 
+        public static float SqrDistance(Transform character, Vector3 target)
+        {
+            Vector3 offset = target - character.position;
+
+            return offset.sqrMagnitude;
+        }
+
         /// <summary>
         /// Return true if the target is within a certain range from the character.
         /// </summary>
         public static bool IsTargetInRange(Transform character, Transform target, float range)
+        {
+            return SqrDistance(character, target) < range * range;
+        }
+
+        public static bool IsTargetInRange(Transform character, Vector3 target, float range)
         {
             return SqrDistance(character, target) < range * range;
         }

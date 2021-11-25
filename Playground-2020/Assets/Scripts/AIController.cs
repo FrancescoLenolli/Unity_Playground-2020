@@ -1,4 +1,3 @@
-using CoreCharacter.Utilities;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,48 +5,34 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class AIController : MonoBehaviour
 {
-    [SerializeField]
-    private float speed = 1f;
-    [SerializeField]
-    private float range = 1f;
-    [SerializeField]
-    private float threshold = 1f;
-    [SerializeField]
-    private float maxAcceleration = 1f;
+    [SerializeField] private float speed = 1f;
+    [SerializeField] private bool canAvoidOtherAgents = false;
+    [SerializeField] private float threshold = 1f;
+    [SerializeField] private float maxAcceleration = 1f;
 
     private NavMeshAgent agent;
-    private Transform target = null;
 
-    private void Awake()
+    public void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
     }
 
-    private void OnMouseDown()
+    public void GoTo(Vector3 target)
     {
-        Debug.Log(name);
+        agent.SetDestination(target);
     }
 
-    public void UpdatePosition(List<AIController> otherAgents, Transform target)
+    public void GoTo(Transform building)
     {
-        if (!this.target)
-            this.target = target;
-
-        Move();
-        MoveAwayFromOtherAgents(otherAgents);
+        agent.SetDestination(building.position);
     }
 
-    private void Move()
-    {
-        if (target)
-        {
-            if (!CharacterUtilities.IsTargetInRange(transform, target, range))
-                agent.SetDestination(target.position);
-        }
-    }
-
+    #region Separation Logic
     private void MoveAwayFromOtherAgents(List<AIController> otherAgents)
     {
+        if (!canAvoidOtherAgents)
+            return;
+
         Vector3 separationVector = Vector3.zero;
         for (int i = 0; i < otherAgents.Count; ++i)
         {
@@ -85,4 +70,5 @@ public class AIController : MonoBehaviour
         float strength = maxAcceleration * (threshold - distance) / threshold;
         return strength;
     }
+    #endregion
 }
