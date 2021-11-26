@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class AgentManager : MonoBehaviour
 {
+    [SerializeField] private Transform highlighter = null;
     private List<AIController> agents = new List<AIController>();
     private AIController selectedAgent = null;
     private bool isEnabled = true;
@@ -19,11 +20,20 @@ public class AgentManager : MonoBehaviour
     public void Enable(bool isEnabled)
     {
         this.isEnabled = isEnabled;
+
+        if (!this.isEnabled)
+            DeselectAgent();
     }
 
     public bool IsEnabled()
     {
         return isEnabled;
+    }
+
+    public void TryDeselectAgent(AIController agent)
+    {
+        if (agent == selectedAgent)
+            DeselectAgent();
     }
 
     private void AgentSelection()
@@ -72,20 +82,25 @@ public class AgentManager : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit))
-                selectedAgent.GoTo(hit.point);
+            if (!Physics.Raycast(ray, out hit))
+                return;
+
+            Building building = hit.collider.GetComponent<Building>();
+                selectedAgent.GoTo(building ? building.GetEntrance() : hit.point);
         }
     }
 
     private void SelectAgent(AIController agent)
     {
         selectedAgent = agent;
-        Debug.Log("Agent selected");
+        highlighter.parent = selectedAgent.transform;
+        highlighter.position = new Vector3(selectedAgent.transform.position.x, 0.005f, selectedAgent.transform.position.z);
     }
 
-    private void DeselectAgent()
+    public void DeselectAgent()
     {
         selectedAgent = null;
-        Debug.Log("Agent deselected");
+        highlighter.parent = transform;
+        highlighter.position = new Vector3(0, -20, 0);
     }
 }

@@ -27,6 +27,11 @@ public class AIController : MonoBehaviour
         agent.SetDestination(building.position);
     }
 
+    public void Stop()
+    {
+        agent.isStopped = true;
+    }
+
     #region Separation Logic
     private void MoveAwayFromOtherAgents(List<AIController> otherAgents)
     {
