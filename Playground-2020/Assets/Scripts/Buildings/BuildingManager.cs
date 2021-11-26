@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
 {
-    [SerializeField] private Transform buildingPrefab = null;
+    [SerializeField] private List<Transform> buildingPrefabs = null;
 
     private Transform currentBuilding = null;
     private AgentManager agentManager = null;
+
+    public int buildingsCount { get => buildingPrefabs.Count; }
 
     private void Awake()
     {
@@ -16,12 +18,6 @@ public class BuildingManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            currentBuilding = Instantiate(buildingPrefab);
-            agentManager.Enable(false);
-        }
-
         if (!agentManager.IsEnabled())
         {
             if (Input.GetMouseButtonDown(0))
@@ -45,5 +41,11 @@ public class BuildingManager : MonoBehaviour
 
             currentBuilding.position = targetPosition;
         }
+    }
+
+    public void InstantiateBuilding(int index)
+    {
+        currentBuilding = Instantiate(buildingPrefabs[index]);
+        agentManager.Enable(false);
     }
 }
