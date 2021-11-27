@@ -18,6 +18,12 @@ public class BuildingEntrance : MonoBehaviour
         AIController agent = other.GetComponent<AIController>();
         if (agent)
         {
+            if(building.isFull())
+            {
+                Debug.Log($"{building.name} is full!");
+                return;
+            }
+
             agent.Stop();
             agentManager.TryDeselectAgent(agent);
             building.AddAgent(agent);

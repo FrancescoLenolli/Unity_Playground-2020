@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   info:
-    jobsCounter: 1
+    jobsCounter: 2
     resourceProduced: 0
     maxProduction: 100
     entrance: {fileID: 2305420439898901476}

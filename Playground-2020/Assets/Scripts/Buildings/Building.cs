@@ -2,15 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ResourceType { Food, Wood, Stone, Gold }
+public enum ResourceType { Food = 0, Wood = 1, Stone = 2, Gold = 3 }
 public class Building : MonoBehaviour
 {
     [SerializeField] protected BuildingInfo info;
 
     public virtual float Produce()
     {
-        Debug.Log("Base method called.");
-        return 0f;
+        return info.currentProduction;
     }
 
     public void AddAgent(AIController agent)
@@ -36,5 +35,10 @@ public class Building : MonoBehaviour
     public Vector3 GetEntrance()
     {
         return info.entrance.transform.position;
+    }
+
+    public bool isFull()
+    {
+        return info.isFull;
     }
 }

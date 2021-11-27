@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
 {
-    [SerializeField] private List<Transform> buildingPrefabs = null;
+    [SerializeField] private List<Building> buildingPrefabs = null;
 
-    private Transform currentBuilding = null;
+    private Building currentBuilding = null;
     private AgentManager agentManager = null;
+    private List<Building> buildings = new List<Building>();
 
     public int buildingsCount { get => buildingPrefabs.Count; }
+    public List<Building> Buildings { get => buildings; }
 
     private void Awake()
     {
@@ -24,6 +26,7 @@ public class BuildingManager : MonoBehaviour
             {
                 if (currentBuilding)
                 {
+                    buildings.Add(currentBuilding);
                     currentBuilding = null;
                     agentManager.Enable(true);
                 }
@@ -39,7 +42,7 @@ public class BuildingManager : MonoBehaviour
             Vector3 targetPosition = hit.point;
             targetPosition = new Vector3(targetPosition.x, .5f, targetPosition.z);
 
-            currentBuilding.position = targetPosition;
+            currentBuilding.transform.position = targetPosition;
         }
     }
 

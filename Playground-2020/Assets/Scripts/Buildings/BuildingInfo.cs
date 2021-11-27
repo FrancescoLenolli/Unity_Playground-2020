@@ -15,6 +15,7 @@ public class BuildingInfo
     [HideInInspector] public int jobsFree { get => jobsCounter - jobsOccupied; }
     [HideInInspector] public float efficiency { get => GetEfficiency(jobsOccupied, jobsCounter); }
     [HideInInspector] public float currentProduction { get => PercentOf(efficiency, maxProduction); }
+    [HideInInspector] public bool isFull { get => jobsFree == 0; }
 
     private float GetEfficiency(float value, float maxValue)
     {
