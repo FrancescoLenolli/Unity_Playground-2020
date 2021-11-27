@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 2106700293014349261}
   - component: {fileID: 8640335007605625704}
   m_Layer: 0
-  m_Name: Building
+  m_Name: Building_Gold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,7 +138,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100006, guid: bae110eee250e4b418b188f4ae4e3170, type: 3}
+  - {fileID: 2100008, guid: efe9381559c516743bd05cef82f39ebb, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   info:
     jobsCounter: 2
-    resourceProduced: 0
+    resourceProduced: 3
     maxProduction: 100
     entrance: {fileID: 2305420439898901476}
     agentsEmployed: []

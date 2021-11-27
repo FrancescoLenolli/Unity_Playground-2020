@@ -8,6 +8,9 @@ public class ResourceManager : MonoBehaviour
     [SerializeField] private BuildingManager buildingManager = null;
 
     private List<Resource> resources = new List<Resource>();
+    private Action<List<Resource>> onResourcesUpdated;
+
+    public Action<List<Resource>> OnResourcesUpdated { get => onResourcesUpdated; set => onResourcesUpdated = value; }
 
     private void Awake()
     {
@@ -18,6 +21,8 @@ public class ResourceManager : MonoBehaviour
             ResourceType type = (ResourceType)(Enum.GetValues(typeof(ResourceType)).GetValue(i));
             resources.Add(new Resource(type, 0));
         }
+
+        InvokeRepeating("GetTotalProduction", 1f, 2f);
     }
 
     private void Update()
@@ -40,5 +45,7 @@ public class ResourceManager : MonoBehaviour
 
         for (int i = 0; i < resources.Count; ++i)
             resources[i].AddValue(totalProduction[i]);
+
+        onResourcesUpdated?.Invoke(resources);
     }
 }
