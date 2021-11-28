@@ -10,9 +10,8 @@ public class CameraController : MonoBehaviour
 
     private Vector3 moveInput;
     private float zoomInput;
+    public float zoomValue = 0f;
     private Camera mainCamera;
-    private Vector2 positionXLimit;
-    private Vector2 positionZLimit;
 
     private void Awake()
     {
@@ -28,16 +27,13 @@ public class CameraController : MonoBehaviour
     private void LateUpdate()
     {
         transform.position += movementSpeed * Time.deltaTime * moveInput;
-        //float positionX = Mathf.Clamp(transform.position.x, positionXLimit.x, positionXLimit.y);
-        //float positionZ = Mathf.Clamp(transform.position.z, positionZLimit.x, positionZLimit.y);
-        //transform.position = new Vector3(positionX, transform.position.y, positionZ);
+        //mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView += zoomSpeed * -zoomInput, zoomLimits.x, zoomLimits.y);
 
-        mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView += zoomSpeed * -zoomInput, zoomLimits.x, zoomLimits.y);
-    }
-
-    public void SetCameraLimits(Vector3 lowLimit, Vector3 highLimit)
-    {
-        positionXLimit = new Vector2(lowLimit.x, highLimit.x);
-        positionZLimit = new Vector2(lowLimit.z, highLimit.z);
+        zoomValue += zoomInput * 10;
+        if (zoomValue >= zoomLimits.x && zoomValue <= zoomLimits.y)
+        {
+            transform.position += zoomInput * transform.forward;
+        }
+        zoomValue = Mathf.Clamp(zoomValue, zoomLimits.x, zoomLimits.y);
     }
 }

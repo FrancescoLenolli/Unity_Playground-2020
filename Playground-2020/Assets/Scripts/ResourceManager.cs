@@ -22,7 +22,7 @@ public class ResourceManager : MonoBehaviour
             resources.Add(new Resource(type, 0));
         }
 
-        InvokeRepeating("GetTotalProduction", 1f, 2f);
+        InvokeRepeating("GetTotalProduction", 0f, 2f);
     }
 
     private void Update()
