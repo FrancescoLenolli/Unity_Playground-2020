@@ -1,22 +1,21 @@
+using Messaging;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public enum ResourceType { Food = 0, Wood = 1, Stone = 2, Gold = 3 }
 
 public class ResourceManager : MonoBehaviour
 {
     [SerializeField] private BuildingManager buildingManager = null;
 
     private List<Resource> resources = new List<Resource>();
-    private Action<List<Resource>> onResourcesUpdated;
-
-    public Action<List<Resource>> OnResourcesUpdated { get => onResourcesUpdated; set => onResourcesUpdated = value; }
 
     private void Awake()
     {
         int resourcesCount = Enum.GetNames(typeof(ResourceType)).Length;
 
-        for(int i = 0; i < resourcesCount; ++i)
+        for (int i = 0; i < resourcesCount; ++i)
         {
             ResourceType type = (ResourceType)(Enum.GetValues(typeof(ResourceType)).GetValue(i));
             resources.Add(new Resource(type, 0));
@@ -25,27 +24,19 @@ public class ResourceManager : MonoBehaviour
         InvokeRepeating("GetTotalProduction", 0f, 2f);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GetTotalProduction();
-        }
-    }
-
     private void GetTotalProduction()
     {
         float[] totalProduction = new float[4];
 
-        foreach(Building building in buildingManager.Buildings)
+        foreach (ProductionBuilding building in buildingManager.ProductionBuildings)
         {
             int index = Array.IndexOf(Enum.GetValues(typeof(ResourceType)), building.GetResource());
-            totalProduction[index] += building.Produce();
+            totalProduction[index] += building.GetCurrentProduction();
         }
 
         for (int i = 0; i < resources.Count; ++i)
             resources[i].AddValue(totalProduction[i]);
 
-        onResourcesUpdated?.Invoke(resources);
+        MessagingSystem.TriggerEvent("ResourcesUpdated", resources);
     }
 }

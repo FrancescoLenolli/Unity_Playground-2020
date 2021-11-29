@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class BuildingEntrance : MonoBehaviour
 {
-    [SerializeField] private Building building = null;
-
+    private Building building;
     private AgentManager agentManager;
 
     private void Awake()
     {
+        building = GetComponentInParent<Building>();
         agentManager = FindObjectOfType<AgentManager>();
     }
 
@@ -18,7 +18,7 @@ public class BuildingEntrance : MonoBehaviour
         AIController agent = other.GetComponent<AIController>();
         if (agent)
         {
-            if(building.isFull())
+            if(!building.CanEnter())
             {
                 Debug.Log($"{building.name} is full!");
                 return;

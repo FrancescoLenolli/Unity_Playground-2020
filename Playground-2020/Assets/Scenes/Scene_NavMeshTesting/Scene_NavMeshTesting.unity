@@ -2883,10 +2883,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buildingPrefabs:
-  - {fileID: 4942977099210873846, guid: dad88fb7c7246554383c637e600e3b3c, type: 3}
-  - {fileID: 9063142065496221165, guid: 498e7ac101843254cb8216f335d9c44c, type: 3}
-  - {fileID: 5043332985485297973, guid: 3e11e83a26e8e96438177b58862aeef8, type: 3}
-  - {fileID: 4819016131085932005, guid: 8e40904453fd8914688dc3ac28aab641, type: 3}
+  - {fileID: 914917638421130408, guid: dad88fb7c7246554383c637e600e3b3c, type: 3}
+  - {fileID: 7650222653033509510, guid: 498e7ac101843254cb8216f335d9c44c, type: 3}
+  - {fileID: 1801989476896077934, guid: 8e40904453fd8914688dc3ac28aab641, type: 3}
+  - {fileID: 3363525557957293312, guid: 3e11e83a26e8e96438177b58862aeef8, type: 3}
 --- !u!4 &1935676849
 Transform:
   m_ObjectHideFlags: 0

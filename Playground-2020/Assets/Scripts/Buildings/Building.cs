@@ -2,43 +2,39 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ResourceType { Food = 0, Wood = 1, Stone = 2, Gold = 3 }
 public class Building : MonoBehaviour
 {
-    [SerializeField] protected BuildingInfo info;
+    [SerializeField] protected BuildingEntrance entrance = null;
+    protected List<AIController> agents = new List<AIController>();
 
-    public virtual float Produce()
+    public virtual void Work()
     {
-        return info.currentProduction;
+        Debug.Log("Base Work() function called");
     }
 
-    public void AddAgent(AIController agent)
+    public virtual bool CanEnter()
     {
-        info.agentsEmployed.Add(agent);
+        Debug.Log("Base CanEnter() function called, return value set to FALSE");
+        return false;
+    }
+
+    public virtual void AddAgent(AIController agent)
+    {
+        agents.Add(agent);
         agent.transform.parent = transform;
         agent.gameObject.SetActive(false);
     }
 
-    public void RemoveAgent(AIController agent)
+    public virtual void RemoveAgent(AIController agent)
     {
-        info.agentsEmployed.Remove(agent);
+        agents.Remove(agent);
         agent.gameObject.SetActive(true);
         agent.transform.position = GetEntrance() + transform.forward * 3;
         agent.transform.parent = null;
     }
 
-    public ResourceType GetResource()
-    {
-        return info.resourceProduced;
-    }
-
     public Vector3 GetEntrance()
     {
-        return info.entrance.transform.position;
-    }
-
-    public bool isFull()
-    {
-        return info.isFull;
+        return entrance.transform.position;
     }
 }

@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4942977099210873845}
-  - component: {fileID: 4942977099210873846}
   - component: {fileID: 6278433317490425133}
+  - component: {fileID: 914917638421130408}
   m_Layer: 0
   m_Name: Bank
   m_TagString: Untagged
@@ -34,24 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4942977099210873846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4942977099210873847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f5644728383d684d99ed88b964346bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  info:
-    jobsCounter: 5
-    resourceProduced: 3
-    maxProduction: 400
-    entrance: {fileID: 4942977099490676301}
-    agentsEmployed: []
 --- !u!65 &6278433317490425133
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -65,6 +47,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 7.370267, y: 7.816328, z: 6}
   m_Center: {x: 0.052477837, y: 3.896473, z: 0}
+--- !u!114 &914917638421130408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4942977099210873847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b7cf65d0c359449bd2cf7deee19512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entrance: {fileID: 4942977099490676301}
+  info:
+    jobsCounter: 2
+    resourceProduced: 3
+    maxProduction: 100
+    agentsEmployed: []
 --- !u!1 &4942977099490676297
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aa2ea86d22f47848b9b7884e8b0483a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  building: {fileID: 4942977099210873846}
+  building: {fileID: 0}
 --- !u!65 &4942977099490676302
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using Messaging;
 using System.Collections;
 using System.Collections.Generic;
 using UIFramework.StateMachine;
@@ -12,6 +13,12 @@ public class UIState_ResourcesMenu_Main : UIState_ResourcesMenu
         base.PrepareState(owner);
         ResourceManager resourceManager = root.resourceManager;
         view = root.mainView;
-        resourceManager.OnResourcesUpdated += view.UpdateResources;
+        MessagingSystem.StartListening("ResourcesUpdated", UpdateResources);
+    }
+
+    private void UpdateResources(object resources)
+    {
+        List<Resource> updatedResources = (List<Resource>)resources;
+        view.UpdateResources(updatedResources);
     }
 }

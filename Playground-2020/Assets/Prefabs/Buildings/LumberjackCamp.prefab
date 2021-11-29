@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4819016131085932004}
-  - component: {fileID: 4819016131085932005}
   - component: {fileID: 52252347475415010}
+  - component: {fileID: 1801989476896077934}
   m_Layer: 0
-  m_Name: Woodcutter
+  m_Name: LumberjackCamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,24 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4819016131085932005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4819016131085932002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f5644728383d684d99ed88b964346bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  info:
-    jobsCounter: 6
-    resourceProduced: 1
-    maxProduction: 500
-    entrance: {fileID: 4819016132437752027}
-    agentsEmployed: []
 --- !u!65 &52252347475415010
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -65,6 +47,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10.071869, y: 5.0188513, z: 5.496029}
   m_Center: {x: 0.039905548, y: 2.5273538, z: 0}
+--- !u!114 &1801989476896077934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4819016131085932002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5b7cf65d0c359449bd2cf7deee19512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entrance: {fileID: 4819016132437752027}
+  info:
+    jobsCounter: 5
+    resourceProduced: 1
+    maxProduction: 300
+    agentsEmployed: []
 --- !u!1 &4819016132437752024
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aa2ea86d22f47848b9b7884e8b0483a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  building: {fileID: 4819016131085932005}
+  building: {fileID: 0}
 --- !u!65 &4819016132437752029
 BoxCollider:
   m_ObjectHideFlags: 0

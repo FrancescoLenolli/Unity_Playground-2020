@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
@@ -8,10 +9,11 @@ public class BuildingManager : MonoBehaviour
 
     private Building currentBuilding = null;
     private AgentManager agentManager = null;
-    private List<Building> buildings = new List<Building>();
+    private List<Building> totalbuildings = new List<Building>();
+    private List<ProductionBuilding> productionBuildings = new List<ProductionBuilding>();
 
     public int buildingsCount { get => buildingPrefabs.Count; }
-    public List<Building> Buildings { get => buildings; }
+    public List<ProductionBuilding> ProductionBuildings { get => productionBuildings; }
 
     private void Awake()
     {
@@ -26,7 +28,7 @@ public class BuildingManager : MonoBehaviour
             {
                 if (currentBuilding)
                 {
-                    buildings.Add(currentBuilding);
+                    AddBuilding(currentBuilding);
                     currentBuilding = null;
                     agentManager.Enable(true);
                 }
@@ -50,5 +52,18 @@ public class BuildingManager : MonoBehaviour
     {
         currentBuilding = Instantiate(buildingPrefabs[index]);
         agentManager.Enable(false);
+    }
+
+    private void AddBuilding(Building building)
+    {
+
+        totalbuildings.Add(building);
+
+        ProductionBuilding productionBuilding = (ProductionBuilding)building;
+        if (productionBuilding)
+        {
+            productionBuildings.Add(productionBuilding);
+            return;
+        }
     }
 }

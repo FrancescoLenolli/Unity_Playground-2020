@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class BuildingInfo
+public class ProductionBuildingInfo
 {
     public int jobsCounter = 1;
     public ResourceType resourceProduced = ResourceType.Food;
     public float maxProduction = 100f;
-    public BuildingEntrance entrance = null;
 
     [HideInInspector] public List<AIController> agentsEmployed = new List<AIController>();
     [HideInInspector] public int jobsOccupied { get => agentsEmployed.Count; }
