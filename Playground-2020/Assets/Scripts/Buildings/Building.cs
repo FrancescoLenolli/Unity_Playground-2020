@@ -8,15 +8,14 @@ public class Building : MonoBehaviour
 
     protected List<AIController> agents = new List<AIController>();
 
+    protected bool isOverlapping = false;
+
     private bool isPlaced = false;
-    private bool canBePlaced = true;
     private NavMeshObstacle navMeshObstacle;
 
     private void Awake()
     {
-        navMeshObstacle = GetComponentInChildren<NavMeshObstacle>();
-        entrance.gameObject.SetActive(false);
-        navMeshObstacle.enabled = false;
+        Init();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,7 +23,7 @@ public class Building : MonoBehaviour
         if (isPlaced)
             return;
 
-        canBePlaced = false;
+        isOverlapping = true;
     }
 
     private void OnTriggerExit(Collider other)
@@ -32,11 +31,12 @@ public class Building : MonoBehaviour
         if (isPlaced)
             return;
 
-        canBePlaced = true;
+        isOverlapping = false;
     }
 
     public virtual void Work() { }
-
+    public virtual void ShowDetails() { }
+    public virtual bool CanBePlaced() { return !isOverlapping; }
     public virtual bool CanEnter() { return false; }
 
     public virtual void AddAgent(AIController agent)
@@ -59,15 +59,17 @@ public class Building : MonoBehaviour
         return entrance.transform.position;
     }
 
-    public bool CanBePlaced()
-    {
-        return canBePlaced;
-    }
-
     public void Place()
     {
         isPlaced = true;
         entrance.gameObject.SetActive(true);
         navMeshObstacle.enabled = true;
+    }
+
+    protected virtual void Init()
+    {
+        navMeshObstacle = GetComponentInChildren<NavMeshObstacle>();
+        entrance.gameObject.SetActive(false);
+        navMeshObstacle.enabled = false;
     }
 }

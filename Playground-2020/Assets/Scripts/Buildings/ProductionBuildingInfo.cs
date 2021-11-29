@@ -25,4 +25,12 @@ public class ProductionBuildingInfo
     {
         return Mathf.Round(percentage * value / 100);
     }
+
+    public override string ToString()
+    {
+        string result = $"Resource Produced: {resourceProduced}\nTotal Jobs: {jobsCounter}\nJobs occupied: {jobsOccupied}\n" +
+            $"Efficiency: {efficiency}%\nCurrent Production: {currentProduction}/h";
+
+        return result;
+    }
 }

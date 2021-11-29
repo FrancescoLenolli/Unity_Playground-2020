@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4819016131085932004}
   - component: {fileID: 52252347475415010}
   - component: {fileID: -3297512979352700688}
-  - component: {fileID: 1801989476896077934}
+  - component: {fileID: 3813041456089244136}
   m_Layer: 0
   m_Name: LumberjackCamp
   m_TagString: Untagged
@@ -64,7 +64,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1801989476896077934
+--- !u!114 &3813041456089244136
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,15 +73,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4819016131085932002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5b7cf65d0c359449bd2cf7deee19512, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ebd11938fc049b46888192da1c0e0b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   entrance: {fileID: 4819016132437752027}
   info:
-    jobsCounter: 5
+    jobsCounter: 3
     resourceProduced: 1
-    maxProduction: 300
+    maxProduction: 250
     agentsEmployed: []
+  range: 15
 --- !u!1 &4819016132437752024
 GameObject:
   m_ObjectHideFlags: 0

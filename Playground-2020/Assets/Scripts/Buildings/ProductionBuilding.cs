@@ -32,4 +32,9 @@ public class ProductionBuilding : Building
     {
         return info.currentProduction;
     }
+
+    public override void ShowDetails()
+    {
+        Debug.Log(info.ToString());
+    }
 }

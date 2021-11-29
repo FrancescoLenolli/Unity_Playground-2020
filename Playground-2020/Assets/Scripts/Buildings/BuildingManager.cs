@@ -36,6 +36,16 @@ public class BuildingManager : MonoBehaviour
                     RemoveBuilding();
             }
         }
+        else
+        {
+            if(Input.GetMouseButtonDown(0))
+            {
+                RaycastHit hit = GetMouseWorldPoint();
+                Building building = hit.collider.GetComponent<Building>();
+                if (building)
+                    building.ShowDetails();
+            }
+        }
 
         if (currentBuilding)
             MoveBuilding();
@@ -70,11 +80,7 @@ public class BuildingManager : MonoBehaviour
 
     private void MoveBuilding()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        Physics.Raycast(ray, out hit);
-
-        Vector3 targetPosition = hit.point;
+        Vector3 targetPosition = GetMouseWorldPoint().point;
         targetPosition = new Vector3(targetPosition.x, 0f, targetPosition.z);
 
         currentBuilding.transform.position = targetPosition;
@@ -90,5 +96,14 @@ public class BuildingManager : MonoBehaviour
             productionBuildings.Add(productionBuilding);
             return;
         }
+    }
+
+    private RaycastHit GetMouseWorldPoint()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit);
+
+        return hit;
     }
 }
