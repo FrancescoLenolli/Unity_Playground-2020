@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aa2ea86d22f47848b9b7884e8b0483a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  building: {fileID: 0}
 --- !u!65 &9063142065235171960
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -85,6 +84,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9063142065496221166}
   - component: {fileID: 5339992512475323770}
+  - component: {fileID: 3727198293388231198}
   - component: {fileID: 7650222653033509510}
   m_Layer: 0
   m_Name: Butcher
@@ -122,6 +122,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.988924, y: 3.7474728, z: 4.9685717}
   m_Center: {x: 0.02035141, y: 1.9435825, z: 0.010175705}
+--- !u!54 &3727198293388231198
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9063142065496221164}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &7650222653033509510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,7 +245,7 @@ NavMeshObstacle:
   m_Shape: 1
   m_Extents: {x: 2.5, y: 2.6, z: 2}
   m_MoveThreshold: 0.1
-  m_Carve: 0
+  m_Carve: 1
   m_CarveOnlyStationary: 1
   m_Center: {x: -0.02, y: 0, z: 2}
   m_TimeToStationary: 0.5

@@ -1,6 +1,5 @@
-using System.Collections;
+using Messaging;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class BuildingManager : MonoBehaviour
@@ -18,6 +17,7 @@ public class BuildingManager : MonoBehaviour
     private void Awake()
     {
         agentManager = FindObjectOfType<AgentManager>();
+        MessagingSystem.StartListening("SelectBuilding", InstantiateBuilding);
     }
 
     private void Update()
@@ -26,26 +26,19 @@ public class BuildingManager : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                if (currentBuilding && currentBuilding.CanBePlaced())
+                    PlaceBuilding();
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
                 if (currentBuilding)
-                {
-                    AddBuilding(currentBuilding);
-                    currentBuilding = null;
-                    agentManager.Enable(true);
-                }
+                    RemoveBuilding();
             }
         }
 
-        if(currentBuilding)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            Physics.Raycast(ray, out hit);
-
-            Vector3 targetPosition = hit.point;
-            targetPosition = new Vector3(targetPosition.x, .5f, targetPosition.z);
-
-            currentBuilding.transform.position = targetPosition;
-        }
+        if (currentBuilding)
+            MoveBuilding();
     }
 
     public void InstantiateBuilding(int index)
@@ -54,9 +47,41 @@ public class BuildingManager : MonoBehaviour
         agentManager.Enable(false);
     }
 
+    private void InstantiateBuilding(object index)
+    {
+        int buildingIndex = (int)index;
+        currentBuilding = Instantiate(buildingPrefabs[buildingIndex]);
+        agentManager.Enable(false);
+    }
+
+    private void PlaceBuilding()
+    {
+        AddBuilding(currentBuilding);
+        currentBuilding.Place();
+        currentBuilding = null;
+        agentManager.Enable(true);
+    }
+
+    private void RemoveBuilding()
+    {
+        Destroy(currentBuilding.gameObject);
+        currentBuilding = null;
+    }
+
+    private void MoveBuilding()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit);
+
+        Vector3 targetPosition = hit.point;
+        targetPosition = new Vector3(targetPosition.x, 0f, targetPosition.z);
+
+        currentBuilding.transform.position = targetPosition;
+    }
+
     private void AddBuilding(Building building)
     {
-
         totalbuildings.Add(building);
 
         ProductionBuilding productionBuilding = (ProductionBuilding)building;

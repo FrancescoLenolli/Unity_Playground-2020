@@ -38,7 +38,7 @@ namespace Messaging
         {
             UnityObjectEvent thisEvent = null;
             if (eventDictionary.TryGetValue(eventName, out thisEvent))
-                thisEvent.Invoke(argument);
+                thisEvent?.Invoke(argument);
             else
                 eventDictionary.Add(eventName, thisEvent);
         }
