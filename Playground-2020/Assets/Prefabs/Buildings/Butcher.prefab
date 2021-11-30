@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 5339992512475323770}
   - component: {fileID: 3727198293388231198}
   - component: {fileID: 7650222653033509510}
+  - component: {fileID: 3354173292871430431}
   m_Layer: 0
   m_Name: Butcher
   m_TagString: Untagged
@@ -156,6 +157,19 @@ MonoBehaviour:
     resourceProduced: 0
     maxProduction: 150
     agentsEmployed: []
+--- !u!114 &3354173292871430431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9063142065496221164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe0e47e73bc0eb4d93f4b90e9a2b5b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightMaterial: {fileID: 2100000, guid: 32a76832b79e84347ad9df08b12709c3, type: 2}
 --- !u!1001 &9063142065919297812
 PrefabInstance:
   m_ObjectHideFlags: 0

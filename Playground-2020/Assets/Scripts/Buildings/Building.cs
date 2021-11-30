@@ -13,6 +13,8 @@ public class Building : MonoBehaviour
     private bool isPlaced = false;
     private NavMeshObstacle navMeshObstacle;
 
+    public bool IsPlaced { get => isPlaced; }
+
     private void Awake()
     {
         Init();
@@ -20,7 +22,7 @@ public class Building : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isPlaced)
+        if (isPlaced || other.CompareTag("Terrain"))
             return;
 
         isOverlapping = true;
@@ -28,7 +30,7 @@ public class Building : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (isPlaced)
+        if (isPlaced || other.CompareTag("Terrain"))
             return;
 
         isOverlapping = false;

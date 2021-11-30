@@ -14,7 +14,7 @@ public class UIState_BuildingsMenu_Main : UIState_BuildingsMenu
         view = root.mainView;
         view.OnSelectBuilding += SelectBuilding;
 
-        view.SpawnButtons(root.buildingManager.buildingsCount);
+        view.SpawnButtons(root.buildingManager.Buildings);
     }
 
     private void SelectBuilding(int index)

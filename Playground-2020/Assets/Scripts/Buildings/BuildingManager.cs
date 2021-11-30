@@ -11,7 +11,7 @@ public class BuildingManager : MonoBehaviour
     private List<Building> totalbuildings = new List<Building>();
     private List<ProductionBuilding> productionBuildings = new List<ProductionBuilding>();
 
-    public int buildingsCount { get => buildingPrefabs.Count; }
+    public List<Building> Buildings { get => buildingPrefabs; }
     public List<ProductionBuilding> ProductionBuildings { get => productionBuildings; }
 
     private void Awake()

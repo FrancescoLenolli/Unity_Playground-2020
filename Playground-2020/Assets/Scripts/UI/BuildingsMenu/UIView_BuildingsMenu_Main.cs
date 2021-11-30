@@ -15,14 +15,14 @@ public class UIView_BuildingsMenu_Main : UIView
 
     public Action<int> OnSelectBuilding { get => onSelectBuilding; set => onSelectBuilding = value; }
 
-    public void SpawnButtons(int buttonsCount)
+    public void SpawnButtons(List<Building> buildings)
     {
-        for(int i = 0; i < buttonsCount; ++i)
+        for(int i = 0; i < buildings.Count; ++i)
         {
             int index = i;
             Button newButton = Instantiate(buttonPrefab, buttonsContainer);
             newButton.onClick.AddListener(() => { SelectBuilding(index); });
-            newButton.GetComponentInChildren<TextMeshProUGUI>().text = i.ToString();
+            newButton.GetComponentInChildren<TextMeshProUGUI>().text = buildings[i].name;
         }
     }
 

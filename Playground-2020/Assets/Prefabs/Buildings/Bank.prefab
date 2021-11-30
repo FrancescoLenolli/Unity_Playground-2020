@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6278433317490425133}
   - component: {fileID: -3140700954395929738}
   - component: {fileID: 914917638421130408}
+  - component: {fileID: 2463736841262563358}
   m_Layer: 0
   m_Name: Bank
   m_TagString: Untagged
@@ -82,6 +83,19 @@ MonoBehaviour:
     resourceProduced: 3
     maxProduction: 100
     agentsEmployed: []
+--- !u!114 &2463736841262563358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4942977099210873847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe0e47e73bc0eb4d93f4b90e9a2b5b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  highlightMaterial: {fileID: 2100000, guid: 32a76832b79e84347ad9df08b12709c3, type: 2}
 --- !u!1 &4942977099490676297
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +181,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Model
       objectReference: {fileID: 0}
+    - target: {fileID: 1654088500323024, guid: bba41fca562a6fe40aaa62584dab0150, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4233584650479570, guid: bba41fca562a6fe40aaa62584dab0150, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -211,6 +229,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 23293969760344852, guid: bba41fca562a6fe40aaa62584dab0150,
+        type: 3}
+      propertyPath: m_DynamicOccludee
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 23293969760344852, guid: bba41fca562a6fe40aaa62584dab0150,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 23293969760344852, guid: bba41fca562a6fe40aaa62584dab0150,
+        type: 3}
+      propertyPath: m_Materials.Array.data[6]
+      value: 
+      objectReference: {fileID: 2100000, guid: 744b1741abbb7f741996f81385ef0304, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bba41fca562a6fe40aaa62584dab0150, type: 3}
 --- !u!1 &4944137762734170175 stripped
