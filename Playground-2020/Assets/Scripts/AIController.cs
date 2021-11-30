@@ -11,10 +11,24 @@ public class AIController : MonoBehaviour
     [SerializeField] private float maxAcceleration = 1f;
 
     private NavMeshAgent agent;
+    private Animator animator;
 
     public void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponentInChildren<Animator>();
+    }
+
+    private void Update()
+    {
+        if(agent.velocity != Vector3.zero)
+        {
+            animator.SetBool("IsWalking", true);
+        }
+        else
+        {
+            animator.SetBool("IsWalking", false);
+        }
     }
 
     public void GoTo(Vector3 target)
