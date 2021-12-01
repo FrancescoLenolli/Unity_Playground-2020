@@ -40,8 +40,11 @@ public class BuildingManager : MonoBehaviour
         {
             if(Input.GetMouseButtonDown(0))
             {
-                RaycastHit hit = GetMouseWorldPoint();
-                Building building = hit.collider.GetComponent<Building>();
+                Collider collider = GetMouseWorldPoint().collider;
+                if (!collider)
+                    return;
+
+                Building building = collider.GetComponent<Building>();
                 if (building)
                     building.ShowDetails();
             }

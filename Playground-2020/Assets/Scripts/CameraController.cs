@@ -4,36 +4,40 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public float movementSpeed = 1.0f;
-    public float zoomSpeed = 1.0f;
-    public Vector2 zoomLimits = new Vector2(10, 60);
+    public float movementSpeed = 1f;
+    public float rotationSpeed = 1f;
+    public float zoomSpeed = 1f;
+    public Vector2 cameraYLimits = new Vector2(6f, 20f);
 
     private Vector3 moveInput;
+    private float rotationInput;
     private float zoomInput;
-    public float zoomValue = 0f;
     private Camera mainCamera;
+    private Vector3 cameraStartingPosition;
 
     private void Awake()
     {
-        mainCamera = GetComponent<Camera>();
+        mainCamera = Camera.main;
+        cameraStartingPosition = mainCamera.transform.position;
     }
 
     private void Update()
     {
         moveInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        rotationInput = Input.GetAxis("Rotate");
         zoomInput = Input.GetAxis("Mouse ScrollWheel");
     }
 
     private void LateUpdate()
     {
-        transform.position += movementSpeed * Time.deltaTime * moveInput;
-        //mainCamera.fieldOfView = Mathf.Clamp(mainCamera.fieldOfView += zoomSpeed * -zoomInput, zoomLimits.x, zoomLimits.y);
+        transform.Translate(movementSpeed * Time.deltaTime * moveInput);
+        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime * rotationInput);
 
-        zoomValue += zoomInput * 10;
-        if (zoomValue >= zoomLimits.x && zoomValue <= zoomLimits.y)
-        {
-            transform.position += zoomInput * transform.forward;
-        }
-        zoomValue = Mathf.Clamp(zoomValue, zoomLimits.x, zoomLimits.y);
+        Vector3 cameraZoomDirection = (transform.position - cameraStartingPosition).normalized;
+        Vector3 cameraCurrentPosition = mainCamera.transform.localPosition;
+        Vector3 cameraNewPosition = cameraCurrentPosition += zoomSpeed * Time.deltaTime * zoomInput * cameraZoomDirection;
+
+        if (cameraNewPosition.y > cameraYLimits.x && cameraNewPosition.y < cameraYLimits.y)
+            mainCamera.transform.localPosition = cameraNewPosition;
     }
 }
