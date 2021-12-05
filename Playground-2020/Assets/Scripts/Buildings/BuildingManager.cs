@@ -10,6 +10,7 @@ public class BuildingManager : MonoBehaviour
     private AgentManager agentManager = null;
     private List<Building> totalbuildings = new List<Building>();
     private List<ProductionBuilding> productionBuildings = new List<ProductionBuilding>();
+    private bool isBuildingHighlighted = false;
 
     public List<Building> Buildings { get => buildingPrefabs; }
     public List<ProductionBuilding> ProductionBuildings { get => productionBuildings; }
@@ -38,15 +39,9 @@ public class BuildingManager : MonoBehaviour
         }
         else
         {
-            if(Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
             {
-                Collider collider = GetMouseWorldPoint().collider;
-                if (!collider)
-                    return;
-
-                Building building = collider.GetComponent<Building>();
-                if (building)
-                    building.ShowDetails();
+                HandleBuildingHighlight();
             }
         }
 
@@ -57,6 +52,7 @@ public class BuildingManager : MonoBehaviour
     public void InstantiateBuilding(int index)
     {
         currentBuilding = Instantiate(buildingPrefabs[index]);
+        currentBuilding.name = buildingPrefabs[index].name;
         agentManager.Enable(false);
     }
 
@@ -64,7 +60,29 @@ public class BuildingManager : MonoBehaviour
     {
         int buildingIndex = (int)index;
         currentBuilding = Instantiate(buildingPrefabs[buildingIndex]);
+        currentBuilding.name = buildingPrefabs[buildingIndex].name;
         agentManager.Enable(false);
+    }
+
+    private void HandleBuildingHighlight()
+    {
+        if (isBuildingHighlighted)
+        {
+            MessagingSystem.TriggerEvent("HideBuildingInfo");
+            isBuildingHighlighted = false;
+            return;
+        }
+
+        RaycastHit hit = GetMouseWorldPoint();
+        if (!hit.collider)
+            return;
+
+        ProductionBuilding productionBuilding = hit.collider.GetComponent<ProductionBuilding>();
+        if (!productionBuilding || !productionBuildings.Contains(productionBuilding) || isBuildingHighlighted)
+            return;
+
+        MessagingSystem.TriggerEvent("ShowBuildingInfo", productionBuilding.Info);
+        isBuildingHighlighted = true;
     }
 
     private void PlaceBuilding()

@@ -8,13 +8,14 @@ namespace Messaging
     public class UnityObjectEvent : UnityEvent<object> { }
     public static class MessagingSystem
     {
-        private static Dictionary<string, UnityObjectEvent> eventDictionary = new Dictionary<string, UnityObjectEvent>();
+        private static Dictionary<string, UnityObjectEvent> objectEventDictionary = new Dictionary<string, UnityObjectEvent>();
+        private static Dictionary<string, UnityEvent> emptyEventDictionary = new Dictionary<string, UnityEvent>();
 
         public static void StartListening(string eventName, UnityAction<object> listener)
         {
             UnityObjectEvent thisEvent = null;
 
-            if (eventDictionary.TryGetValue(eventName, out thisEvent))
+            if (objectEventDictionary.TryGetValue(eventName, out thisEvent))
             {
                 thisEvent.AddListener(listener);
             }
@@ -22,7 +23,24 @@ namespace Messaging
             {
                 thisEvent = new UnityObjectEvent();
                 thisEvent.AddListener(listener);
-                eventDictionary.Add(eventName, thisEvent);
+                objectEventDictionary.Add(eventName, thisEvent);
+            }
+
+        }
+
+        public static void StartListening(string eventName, UnityAction listener)
+        {
+            UnityEvent thisEvent = null;
+
+            if (emptyEventDictionary.TryGetValue(eventName, out thisEvent))
+            {
+                thisEvent.AddListener(listener);
+            }
+            else
+            {
+                thisEvent = new UnityEvent();
+                thisEvent.AddListener(listener);
+                emptyEventDictionary.Add(eventName, thisEvent);
             }
 
         }
@@ -30,17 +48,33 @@ namespace Messaging
         public static void StopListening(string eventName, UnityAction<object> listener)
         {
             UnityObjectEvent thisEvent = null;
-            if (eventDictionary.TryGetValue(eventName, out thisEvent))
+            if (objectEventDictionary.TryGetValue(eventName, out thisEvent))
+                thisEvent.RemoveListener(listener);
+        }
+
+        public static void StopListening(string eventName, UnityAction listener)
+        {
+            UnityEvent thisEvent = null;
+            if (emptyEventDictionary.TryGetValue(eventName, out thisEvent))
                 thisEvent.RemoveListener(listener);
         }
 
         public static void TriggerEvent(string eventName, object argument)
         {
             UnityObjectEvent thisEvent = null;
-            if (eventDictionary.TryGetValue(eventName, out thisEvent))
+            if (objectEventDictionary.TryGetValue(eventName, out thisEvent))
                 thisEvent?.Invoke(argument);
             else
-                eventDictionary.Add(eventName, thisEvent);
+                objectEventDictionary.Add(eventName, thisEvent);
+        }
+
+        public static void TriggerEvent(string eventName)
+        {
+            UnityEvent thisEvent = null;
+            if (emptyEventDictionary.TryGetValue(eventName, out thisEvent))
+                thisEvent?.Invoke();
+            else
+                emptyEventDictionary.Add(eventName, thisEvent);
         }
     }
 }

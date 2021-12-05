@@ -15,7 +15,7 @@ public class Building : MonoBehaviour
 
     public bool IsPlaced { get => isPlaced; }
 
-    private void Awake()
+    private void Start()
     {
         Init();
     }

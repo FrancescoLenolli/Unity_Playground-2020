@@ -9,6 +9,7 @@ public class ProductionBuildingInfo
     public ResourceType resourceProduced = ResourceType.Food;
     public float maxProduction = 100f;
 
+    [HideInInspector] public string name = "";
     [HideInInspector] public List<AIController> agentsEmployed = new List<AIController>();
     [HideInInspector] public int jobsOccupied { get => agentsEmployed.Count; }
     [HideInInspector] public int jobsFree { get => jobsCounter - jobsOccupied; }

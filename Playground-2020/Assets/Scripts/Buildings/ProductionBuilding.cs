@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class ProductionBuilding : Building
 {
-    [SerializeField] protected ProductionBuildingInfo info;
+    [SerializeField] private ProductionBuildingInfo info;
+
+    public ProductionBuildingInfo Info { get => info; }
+
+    private void Awake()
+    {
+        info.name = name;
+    }
 
     public override bool CanEnter()
     {
