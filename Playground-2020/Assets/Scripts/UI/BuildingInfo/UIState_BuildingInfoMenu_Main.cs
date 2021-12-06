@@ -18,9 +18,8 @@ public class UIState_BuildingInfoMenu_Main : UIState_BuildingInfoMenu
 
     private void ShowInfo(object info)
     {
-        ProductionBuildingInfo buildingInfo = (ProductionBuildingInfo)info;
         view.ShowView();
-        view.SetInfo(buildingInfo);
+        view.SetInfo(info);
     }
 
     private void HideInfo()

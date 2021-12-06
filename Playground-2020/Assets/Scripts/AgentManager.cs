@@ -83,8 +83,6 @@ public class AgentManager : MonoBehaviour
             InstantiateAgent();
         }
 
-        Debug.Log($"Max Agents Capacity: {maxAgentsCapacity}\nCurrent Spawn Counter: {currentSpawnCounter}");
-
         MessagingSystem.TriggerEvent("UpdatedAgentsCounter", new Vector2(agents.Count, maxAgentsCapacity));
     }
 

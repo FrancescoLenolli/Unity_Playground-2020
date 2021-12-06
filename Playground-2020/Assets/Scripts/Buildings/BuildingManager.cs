@@ -80,11 +80,20 @@ public class BuildingManager : MonoBehaviour
             return;
 
         ProductionBuilding productionBuilding = hit.collider.GetComponent<ProductionBuilding>();
-        if (!productionBuilding || !productionBuildings.Contains(productionBuilding) || isBuildingHighlighted)
+        if (productionBuilding && productionBuildings.Contains(productionBuilding) && !isBuildingHighlighted)
+        {
+            MessagingSystem.TriggerEvent("ShowBuildingInfo", productionBuilding.Info);
+            isBuildingHighlighted = true;
             return;
+        }
 
-        MessagingSystem.TriggerEvent("ShowBuildingInfo", productionBuilding.Info);
-        isBuildingHighlighted = true;
+        House house = hit.collider.GetComponent<House>();
+        if (house && houses.Contains(house) && !isBuildingHighlighted)
+        {
+            MessagingSystem.TriggerEvent("ShowBuildingInfo", house);
+            isBuildingHighlighted = true;
+            return;
+        }
     }
 
     private void PlaceBuilding()

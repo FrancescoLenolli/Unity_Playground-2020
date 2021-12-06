@@ -2365,8 +2365,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5643ea1e5a6fe1449a54514bb37c486a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 20
-  rotationSpeed: 50
+  movementSpeed: 25
+  rotationSpeed: 100
   zoomSpeed: 2000
   cameraYLimits: {x: 6, y: 20}
 --- !u!4 &697355637
@@ -3699,6 +3699,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ee1ef3611b7d5d43a1ab027ec639337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoLabels:
+  - {fileID: 52844391}
+  - {fileID: 707381980}
+  - {fileID: 1495359563}
+  - {fileID: 28446438}
+  - {fileID: 2126473201}
+  - {fileID: 1277465580}
   buildingName: {fileID: 52844391}
   buildingResource: {fileID: 707381980}
   buildingEmployees: {fileID: 1495359563}
