@@ -13,6 +13,12 @@ public class ResourceManager : MonoBehaviour
 
     private void Awake()
     {
+        GetResources();
+        InvokeRepeating("GetTotalProduction", 0f, 2f);
+    }
+
+    private void GetResources()
+    {
         int resourcesCount = Enum.GetNames(typeof(ResourceType)).Length;
 
         for (int i = 0; i < resourcesCount; ++i)
@@ -20,8 +26,6 @@ public class ResourceManager : MonoBehaviour
             ResourceType type = (ResourceType)(Enum.GetValues(typeof(ResourceType)).GetValue(i));
             resources.Add(new Resource(type, 0));
         }
-
-        InvokeRepeating("GetTotalProduction", 0f, 2f);
     }
 
     private void GetTotalProduction()

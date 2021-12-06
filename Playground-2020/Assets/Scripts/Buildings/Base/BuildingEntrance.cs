@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildingEntrance : MonoBehaviour
@@ -18,11 +16,8 @@ public class BuildingEntrance : MonoBehaviour
         AIController agent = other.GetComponent<AIController>();
         if (agent)
         {
-            if(!building.CanEnter())
-            {
-                Debug.Log($"{building.name} is full!");
+            if (!building.CanEnter())
                 return;
-            }
 
             agent.Stop();
             agentManager.TryDeselectAgent(agent);

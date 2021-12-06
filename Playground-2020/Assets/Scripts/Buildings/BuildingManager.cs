@@ -10,10 +10,12 @@ public class BuildingManager : MonoBehaviour
     private AgentManager agentManager = null;
     private List<Building> totalbuildings = new List<Building>();
     private List<ProductionBuilding> productionBuildings = new List<ProductionBuilding>();
+    private List<House> houses = new List<House>();
     private bool isBuildingHighlighted = false;
 
     public List<Building> Buildings { get => buildingPrefabs; }
     public List<ProductionBuilding> ProductionBuildings { get => productionBuildings; }
+    public List<House> Houses { get => houses; }
 
     private void Awake()
     {
@@ -111,10 +113,16 @@ public class BuildingManager : MonoBehaviour
     {
         totalbuildings.Add(building);
 
-        ProductionBuilding productionBuilding = (ProductionBuilding)building;
+        ProductionBuilding productionBuilding = building.GetComponent<ProductionBuilding>();
         if (productionBuilding)
         {
             productionBuildings.Add(productionBuilding);
+            return;
+        }
+        House house = building.GetComponent<House>();
+        if(house)
+        {
+            houses.Add(house);
             return;
         }
     }
