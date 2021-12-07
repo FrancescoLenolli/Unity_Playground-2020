@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tree
   - Terrain
+  - Stone
   layers:
   - Default
   - TransparentFX

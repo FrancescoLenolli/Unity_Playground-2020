@@ -153,9 +153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cost:
     requiredResources:
-    - type: 0
-      value: 0
-    de: 1
+    - type: 1
+      value: 150
   entrance: {fileID: 9063142065235171958}
   info:
     jobsCounter: 3

@@ -9,12 +9,13 @@ public enum ResourceType { Food = 0, Wood = 1, Stone = 2, Gold = 3 }
 public class ResourceManager : MonoBehaviour
 {
     [SerializeField] private BuildingManager buildingManager = null;
+    [SerializeField] private List<Resource> startingResources = new List<Resource>();
 
     private List<Resource> resources = new List<Resource>();
 
     private void Awake()
     {
-        GetResources();
+        resources = startingResources;
         InvokeRepeating("GetTotalProduction", 0f, 2f);
     }
 

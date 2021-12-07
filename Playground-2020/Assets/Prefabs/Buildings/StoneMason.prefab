@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5043332985485297972}
   - component: {fileID: 4672091650721356420}
   - component: {fileID: 2034358733916949213}
-  - component: {fileID: 3363525557957293312}
+  - component: {fileID: 1232796324122275781}
   - component: {fileID: 7464993081404837118}
   m_Layer: 0
   m_Name: StoneMason
@@ -65,7 +65,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3363525557957293312
+--- !u!114 &1232796324122275781
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,15 +74,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 5043332985485297978}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5b7cf65d0c359449bd2cf7deee19512, type: 3}
+  m_Script: {fileID: 11500000, guid: 6602d1484ac76214eb30951428f0de2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost:
+    requiredResources:
+    - type: 1
+      value: 250
   entrance: {fileID: 5043332986539280845}
   info:
     jobsCounter: 3
     resourceProduced: 2
     maxProduction: 350
+    name: 
     agentsEmployed: []
+  range: 5
 --- !u!114 &7464993081404837118
 MonoBehaviour:
   m_ObjectHideFlags: 0

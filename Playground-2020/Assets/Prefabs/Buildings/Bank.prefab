@@ -80,9 +80,9 @@ MonoBehaviour:
   cost:
     requiredResources:
     - type: 1
-      value: 150
+      value: 300
     - type: 2
-      value: 100
+      value: 200
   entrance: {fileID: 4942977099490676301}
   info:
     jobsCounter: 2

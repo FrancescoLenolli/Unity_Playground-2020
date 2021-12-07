@@ -6,6 +6,14 @@ using UnityEngine.AI;
 public class Cost
 {
     public List<Resource> requiredResources = new List<Resource>();
+
+    public override string ToString()
+    {
+        string cost = "";
+        requiredResources.ForEach(resource => cost += "\n" + resource.ToString());
+
+        return cost;
+    }
 }
 
 public class Building : MonoBehaviour

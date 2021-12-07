@@ -90,6 +90,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33e99d7c93adb4d4283861fb1d19beb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost:
+    requiredResources:
+    - type: 0
+      value: 50
   entrance: {fileID: 1152639212261039949}
   capacity: 3
 --- !u!1 &1152639212261039950

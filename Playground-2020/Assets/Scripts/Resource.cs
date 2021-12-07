@@ -27,4 +27,9 @@ public class Resource
     {
         this.value += value;
     }
+
+    public override string ToString()
+    {
+        return $"{type}: {value}";
+    }
 }
