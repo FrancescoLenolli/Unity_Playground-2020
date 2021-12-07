@@ -151,11 +151,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b7cf65d0c359449bd2cf7deee19512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost:
+    requiredResources:
+    - type: 0
+      value: 0
+    de: 1
   entrance: {fileID: 9063142065235171958}
   info:
     jobsCounter: 3
     resourceProduced: 0
     maxProduction: 150
+    name: 
     agentsEmployed: []
 --- !u!114 &3354173292871430431
 MonoBehaviour:

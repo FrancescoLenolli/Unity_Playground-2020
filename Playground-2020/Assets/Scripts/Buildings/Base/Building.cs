@@ -2,15 +2,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[System.Serializable]
+public class Cost
+{
+    public List<Resource> requiredResources = new List<Resource>();
+}
+
 public class Building : MonoBehaviour
 {
+    [SerializeField] protected Cost cost = new Cost();
     [SerializeField] protected BuildingEntrance entrance = null;
 
     protected List<AIController> agents = new List<AIController>();
-
     protected bool isOverlapping = false;
 
     private bool isPlaced = false;
+    private ResourceManager resourceManager = null;
     private NavMeshObstacle navMeshObstacle;
 
     public bool IsPlaced { get => isPlaced; }
@@ -36,9 +43,18 @@ public class Building : MonoBehaviour
         isOverlapping = false;
     }
 
+    public static Building CreateBuilding(Building prefab, ResourceManager resourceManager, string name)
+    {
+        Building newBuilding = Instantiate(prefab);
+        newBuilding.resourceManager = resourceManager;
+        newBuilding.name = name;
+
+        return newBuilding;
+    }
+
     public virtual void Work() { }
     public virtual void ShowDetails() { }
-    public virtual bool CanBePlaced() { return !isOverlapping; }
+    public virtual bool CanBePlaced() { return !isOverlapping && resourceManager && resourceManager.CanAffordItem(cost); }
     public virtual bool CanEnter() { return false; }
 
     public virtual void AddAgent(AIController agent)
@@ -54,6 +70,11 @@ public class Building : MonoBehaviour
         agent.gameObject.SetActive(true);
         agent.transform.position = GetEntrance() + transform.forward * 3;
         agent.transform.parent = null;
+    }
+
+    public Cost GetCost()
+    {
+        return cost;
     }
 
     public Vector3 GetEntrance()

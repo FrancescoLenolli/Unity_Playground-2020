@@ -1,6 +1,7 @@
 using Messaging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public enum ResourceType { Food = 0, Wood = 1, Stone = 2, Gold = 3 }
@@ -15,6 +16,29 @@ public class ResourceManager : MonoBehaviour
     {
         GetResources();
         InvokeRepeating("GetTotalProduction", 0f, 2f);
+    }
+
+    public bool CanAffordItem(Cost itemCost)
+    {
+        foreach(Resource requiredResource in itemCost.requiredResources)
+        {
+            Resource resource = resources.Find(x => x.GetType() == requiredResource.GetType());
+            if (resource.GetValue() < requiredResource.GetValue())
+                return false;
+        }
+
+        return true;
+    }
+
+    public void BuyItem(Cost itemCost)
+    {
+        foreach (Resource requiredResource in itemCost.requiredResources)
+        {
+            Resource resource = resources.Find(x => x.GetType() == requiredResource.GetType());
+            resource.AddValue(-requiredResource.GetValue());
+        }
+
+        MessagingSystem.TriggerEvent("ResourcesUpdated", resources);
     }
 
     private void GetResources()

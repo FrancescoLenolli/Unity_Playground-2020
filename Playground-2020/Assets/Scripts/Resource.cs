@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Resource
 {
-    private ResourceType type;
-    private float value;
+    [SerializeField] private ResourceType type = ResourceType.Food;
+    [SerializeField] private float value = 100f;
 
     public Resource(ResourceType type, float value)
     {

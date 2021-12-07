@@ -6,8 +6,9 @@ public class BuildingManager : MonoBehaviour
 {
     [SerializeField] private List<Building> buildingPrefabs = null;
 
-    private Building currentBuilding = null;
-    private AgentManager agentManager = null;
+    private Building currentBuilding;
+    private ResourceManager resourceManager;
+    private AgentManager agentManager;
     private List<Building> totalbuildings = new List<Building>();
     private List<ProductionBuilding> productionBuildings = new List<ProductionBuilding>();
     private List<House> houses = new List<House>();
@@ -20,6 +21,7 @@ public class BuildingManager : MonoBehaviour
     private void Awake()
     {
         agentManager = FindObjectOfType<AgentManager>();
+        resourceManager = FindObjectOfType<ResourceManager>();
         MessagingSystem.StartListening("SelectBuilding", InstantiateBuilding);
     }
 
@@ -61,8 +63,8 @@ public class BuildingManager : MonoBehaviour
     private void InstantiateBuilding(object index)
     {
         int buildingIndex = (int)index;
-        currentBuilding = Instantiate(buildingPrefabs[buildingIndex]);
-        currentBuilding.name = buildingPrefabs[buildingIndex].name;
+
+        currentBuilding = Building.CreateBuilding(buildingPrefabs[buildingIndex], resourceManager, buildingPrefabs[buildingIndex].name);
         agentManager.Enable(false);
     }
 
@@ -98,6 +100,7 @@ public class BuildingManager : MonoBehaviour
 
     private void PlaceBuilding()
     {
+        resourceManager.BuyItem(currentBuilding.GetCost());
         AddBuilding(currentBuilding);
         currentBuilding.Place();
         currentBuilding = null;
