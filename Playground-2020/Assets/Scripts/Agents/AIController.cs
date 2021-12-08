@@ -12,6 +12,7 @@ public class AIController : MonoBehaviour
 
     private NavMeshAgent agent;
     private Animator animator;
+    private Task task;
 
     public void Awake()
     {
@@ -44,6 +45,18 @@ public class AIController : MonoBehaviour
     public void Stop()
     {
         agent.isStopped = true;
+    }
+
+    public void StartTask(Task newTask)
+    {
+        task = newTask;
+        task.Start();
+    }
+
+    public void EndTask()
+    {
+        task.End();
+        task = null;
     }
 
     #region Separation Logic

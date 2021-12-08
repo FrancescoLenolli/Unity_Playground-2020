@@ -147,8 +147,17 @@ public class AgentManager : MonoBehaviour
             if (!Physics.Raycast(ray, out hit))
                 return;
 
-            ProductionBuilding building = hit.collider.GetComponent<ProductionBuilding>();
-            selectedAgent.GoTo(building ? building.GetEntrance() : hit.point);
+            Building building = hit.collider.GetComponent<Building>();
+
+            if (building)
+            {
+                if(building.CanEnter())
+                    selectedAgent.GoTo(building.GetEntrance());
+            }
+            else
+            {
+                selectedAgent.GoTo(hit.point);
+            }
         }
     }
 

@@ -64,20 +64,18 @@ public class Building : MonoBehaviour
     public virtual void ShowDetails() { }
     public virtual bool CanBePlaced() { return !isOverlapping && resourceManager && resourceManager.CanAffordItem(cost); }
     public virtual bool CanEnter() { return false; }
+    public virtual Task GetTask(AIController agent) { return new Task(this, agent); }
 
     public virtual void AddAgent(AIController agent)
     {
         agents.Add(agent);
-        agent.transform.parent = transform;
-        agent.gameObject.SetActive(false);
+        agent.StartTask(GetTask(agent));
     }
 
     public virtual void RemoveAgent(AIController agent)
     {
         agents.Remove(agent);
-        agent.gameObject.SetActive(true);
-        agent.transform.position = GetEntrance() + transform.forward * 3;
-        agent.transform.parent = null;
+        agent.EndTask();
     }
 
     public Cost GetCost()
