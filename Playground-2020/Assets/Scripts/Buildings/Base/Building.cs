@@ -60,7 +60,6 @@ public class Building : MonoBehaviour
         return newBuilding;
     }
 
-    public virtual void Work() { }
     public virtual void ShowDetails() { }
     public virtual bool CanBePlaced() { return !isOverlapping && resourceManager && resourceManager.CanAffordItem(cost); }
     public virtual bool CanEnter() { return false; }

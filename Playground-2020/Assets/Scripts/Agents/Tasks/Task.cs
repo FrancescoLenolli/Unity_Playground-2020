@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles what an employed agent does.
+/// </summary>
 public class Task
 {
     protected Building building;

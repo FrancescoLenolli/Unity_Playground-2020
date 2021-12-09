@@ -120,6 +120,9 @@ public class AgentManager : MonoBehaviour
             }
             else
             {
+
+                /*if there's already a selected agent,
+                 * deselect the last one and select the new one.*/
                 if (selectedAgent && agent != selectedAgent)
                 {
                     DeselectAgent();
@@ -148,7 +151,6 @@ public class AgentManager : MonoBehaviour
                 return;
 
             Building building = hit.collider.GetComponent<Building>();
-
             if (building)
             {
                 if(building.CanEnter())
@@ -163,6 +165,8 @@ public class AgentManager : MonoBehaviour
 
     private void SelectAgent(AIController agent)
     {
+        //Use a small object to highlight the selected agent.
+
         selectedAgent = agent;
         highlighter.parent = selectedAgent.transform;
         highlighter.position = new Vector3(selectedAgent.transform.position.x, 0.005f, selectedAgent.transform.position.z);

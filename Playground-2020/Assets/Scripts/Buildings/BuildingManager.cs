@@ -77,7 +77,7 @@ public class BuildingManager : MonoBehaviour
             return;
         }
 
-        RaycastHit hit = GetMouseWorldPoint();
+        RaycastHit hit = Utils.GetMouseWorldPoint();
         if (!hit.collider)
             return;
 
@@ -115,7 +115,7 @@ public class BuildingManager : MonoBehaviour
 
     private void MoveBuilding()
     {
-        Vector3 targetPosition = GetMouseWorldPoint().point;
+        Vector3 targetPosition = Utils.GetMouseWorldPoint().point;
         targetPosition = new Vector3(targetPosition.x, 0f, targetPosition.z);
 
         currentBuilding.transform.position = targetPosition;
@@ -137,14 +137,5 @@ public class BuildingManager : MonoBehaviour
             houses.Add(house);
             return;
         }
-    }
-
-    private RaycastHit GetMouseWorldPoint()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        Physics.Raycast(ray, out hit);
-
-        return hit;
     }
 }

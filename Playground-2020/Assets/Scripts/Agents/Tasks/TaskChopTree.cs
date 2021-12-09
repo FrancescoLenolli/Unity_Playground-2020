@@ -21,6 +21,7 @@ public class TaskChopTree : Task
         Debug.Log("End New Task");
     }
 
+    // TODO: replace random tree with random tree in nearest forest when increasing map size.
     public IEnumerator GoToRandomTreeRoutine()
     {
         GameObject[] trees = GameObject.FindGameObjectsWithTag("Tree");
