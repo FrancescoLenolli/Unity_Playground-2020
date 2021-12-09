@@ -64,7 +64,7 @@ public class Building : MonoBehaviour
     public virtual void ShowDetails() { }
     public virtual bool CanBePlaced() { return !isOverlapping && resourceManager && resourceManager.CanAffordItem(cost); }
     public virtual bool CanEnter() { return false; }
-    public virtual Task GetTask(AIController agent) { return new Task(this, agent); }
+    public virtual Task GetTask(AIController agent) { return new TaskEnterBuilding(this, agent); }
 
     public virtual void AddAgent(AIController agent)
     {

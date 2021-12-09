@@ -110,7 +110,7 @@ public class AgentManager : MonoBehaviour
 
             AIController agent = hit.collider.GetComponent<AIController>();
 
-            if (!agent)
+            if (!agent || agent.IsEmployed)
             {
                 if (selectedAgent)
                 {

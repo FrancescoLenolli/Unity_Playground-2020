@@ -13,6 +13,11 @@ public class LumberjackCamp : ProductionBuilding
         return !isOverlapping && AnyTreesInRange();
     }
 
+    public override Task GetTask(AIController agent)
+    {
+        return new TaskChopTree(this, agent);
+    }
+
     protected override void Init()
     {
         base.Init();

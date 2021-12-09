@@ -19,7 +19,6 @@ public class BuildingEntrance : MonoBehaviour
             if (!building.CanEnter())
                 return;
 
-            agent.Stop();
             agentManager.TryDeselectAgent(agent);
             building.AddAgent(agent);
         }

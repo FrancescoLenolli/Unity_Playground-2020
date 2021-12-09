@@ -14,6 +14,8 @@ public class AIController : MonoBehaviour
     private Animator animator;
     private Task task;
 
+    public bool IsEmployed { get => task != null; }
+
     public void Awake()
     {
         agent = GetComponent<NavMeshAgent>();

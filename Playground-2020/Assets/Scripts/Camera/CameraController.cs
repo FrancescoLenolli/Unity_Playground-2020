@@ -33,11 +33,11 @@ public class CameraController : MonoBehaviour
         transform.Translate(movementSpeed * Time.deltaTime * moveInput);
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime * rotationInput);
 
-        Vector3 cameraZoomDirection = (transform.position - cameraStartingPosition).normalized;
-        Vector3 cameraCurrentPosition = mainCamera.transform.localPosition;
+        Vector3 cameraZoomDirection = mainCamera.transform.forward;
+        Vector3 cameraCurrentPosition = mainCamera.transform.position;
         Vector3 cameraNewPosition = cameraCurrentPosition += zoomSpeed * Time.deltaTime * zoomInput * cameraZoomDirection;
 
         if (cameraNewPosition.y > cameraYLimits.x && cameraNewPosition.y < cameraYLimits.y)
-            mainCamera.transform.localPosition = cameraNewPosition;
+            mainCamera.transform.position = cameraNewPosition;
     }
 }
