@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -33,22 +35,6 @@ public class Building : MonoBehaviour
     private void Start()
     {
         Init();
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (isPlaced || other.CompareTag("Terrain"))
-            return;
-
-        isOverlapping = true;
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (isPlaced || other.CompareTag("Terrain"))
-            return;
-
-        isOverlapping = false;
     }
 
     public static Building CreateBuilding(Building prefab, ResourceManager resourceManager, string name)
@@ -89,6 +75,14 @@ public class Building : MonoBehaviour
         return lastAgent;
     }
 
+    protected virtual void Init()
+    {
+        navMeshObstacle = GetComponentInChildren<NavMeshObstacle>();
+        entrance.gameObject.SetActive(false);
+        navMeshObstacle.enabled = false;
+        StartCoroutine(CheckOverlapRoutine());
+    }
+
     public Cost GetCost()
     {
         return cost;
@@ -106,10 +100,22 @@ public class Building : MonoBehaviour
         navMeshObstacle.enabled = true;
     }
 
-    protected virtual void Init()
+    private IEnumerator CheckOverlapRoutine()
     {
-        navMeshObstacle = GetComponentInChildren<NavMeshObstacle>();
-        entrance.gameObject.SetActive(false);
-        navMeshObstacle.enabled = false;
+        // OverlapBox is weird, it doesn't reproduce the exact scale of the object.
+        float scaleMultiplier = 2.3f;
+
+        while (!isPlaced)
+        {
+            List<Collider> colliders = Physics.OverlapBox(transform.position, transform.localScale * scaleMultiplier, Quaternion.identity).ToList();
+            colliders.RemoveAll(collider => collider.gameObject.CompareTag("Terrain") || collider.gameObject == gameObject);
+
+            int overlapCount = colliders.Count;
+            isOverlapping = overlapCount > 0;
+
+            yield return null;
+        }
+
+        yield return null;
     }
 }
