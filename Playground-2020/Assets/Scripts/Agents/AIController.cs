@@ -5,6 +5,8 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class AIController : MonoBehaviour
 {
+    [HideInInspector] public Building targetBuilding;
+
     private NavMeshAgent agent;
     private Animator animator;
     private Task task;
@@ -33,10 +35,18 @@ public class AIController : MonoBehaviour
     public void GoTo(Vector3 target)
     {
         agent.SetDestination(target);
+        targetBuilding = null;
+    }
+
+    public void GoTo(Building building)
+    {
+        agent.SetDestination(building.GetEntrance());
+        targetBuilding = building;
     }
 
     public void StartTask(Task newTask)
     {
+        targetBuilding = null;
         task = newTask;
         task.Start();
     }

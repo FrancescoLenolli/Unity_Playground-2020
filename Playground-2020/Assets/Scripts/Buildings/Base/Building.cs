@@ -77,6 +77,18 @@ public class Building : MonoBehaviour
         agent.EndTask();
     }
 
+    public virtual AIController RemoveLastAgent()
+    {
+        if (agents.Count <= 0)
+            return null;
+
+        AIController lastAgent = agents[agents.Count - 1];
+        agents.Remove(lastAgent);
+        lastAgent.EndTask();
+
+        return lastAgent;
+    }
+
     public Cost GetCost()
     {
         return cost;

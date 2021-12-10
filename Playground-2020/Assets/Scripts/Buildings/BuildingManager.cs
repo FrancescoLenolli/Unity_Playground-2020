@@ -47,6 +47,12 @@ public class BuildingManager : MonoBehaviour
             {
                 HandleBuildingHighlight();
             }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (!agentManager.SelectedAgent)
+                    RemoveBuildingEmployee();
+            }
         }
 
         if (currentBuilding)
@@ -110,7 +116,19 @@ public class BuildingManager : MonoBehaviour
     private void RemoveBuilding()
     {
         Destroy(currentBuilding.gameObject);
+        agentManager.Enable(true);
         currentBuilding = null;
+    }
+
+    private void RemoveBuildingEmployee()
+    {
+        RaycastHit hit = Utils.GetMouseWorldPoint();
+        if (!hit.collider)
+            return;
+
+        Building building = hit.collider.GetComponent<Building>();
+        if (building)
+            building.RemoveLastAgent();
     }
 
     private void MoveBuilding()
@@ -132,7 +150,7 @@ public class BuildingManager : MonoBehaviour
             return;
         }
         House house = building.GetComponent<House>();
-        if(house)
+        if (house)
         {
             houses.Add(house);
             return;

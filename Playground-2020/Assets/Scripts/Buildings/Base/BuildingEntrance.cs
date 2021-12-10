@@ -16,7 +16,7 @@ public class BuildingEntrance : MonoBehaviour
         AIController agent = other.GetComponent<AIController>();
         if (agent)
         {
-            if (!building.CanEnter())
+            if (!building.CanEnter() || agent.targetBuilding != building)
                 return;
 
             agentManager.TryDeselectAgent(agent);

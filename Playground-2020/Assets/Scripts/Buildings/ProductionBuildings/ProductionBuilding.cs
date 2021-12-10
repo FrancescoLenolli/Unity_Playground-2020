@@ -30,6 +30,16 @@ public class ProductionBuilding : Building
         info.agentsEmployed.Remove(agent);
     }
 
+    public override AIController RemoveLastAgent()
+    {
+        AIController lastAgent = base.RemoveLastAgent();
+        if (!lastAgent)
+            return null;
+
+        info.agentsEmployed.Remove(lastAgent);
+        return lastAgent;
+    }
+
     public ResourceType GetResource()
     {
         return info.resourceProduced;

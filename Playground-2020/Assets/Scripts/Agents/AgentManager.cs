@@ -17,6 +17,8 @@ public class AgentManager : MonoBehaviour
     private int maxAgentsCapacity;
     private int currentSpawnCounter = 0;
 
+    public AIController SelectedAgent { get => selectedAgent; }
+
     private void Awake()
     {
         Init();
@@ -154,7 +156,7 @@ public class AgentManager : MonoBehaviour
             if (building)
             {
                 if(building.CanEnter())
-                    selectedAgent.GoTo(building.GetEntrance());
+                    selectedAgent.GoTo(building);
             }
             else
             {
