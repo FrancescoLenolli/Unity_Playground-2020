@@ -18,7 +18,7 @@ public class TaskChopTree : Task
 
     public override void End()
     {
-        Debug.Log("End New Task");
+
     }
 
     // TODO: replace random tree with random tree in nearest forest when increasing map size.

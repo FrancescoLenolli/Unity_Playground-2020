@@ -4,20 +4,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-[System.Serializable]
-public class Cost
-{
-    public List<Resource> requiredResources = new List<Resource>();
-
-    public override string ToString()
-    {
-        string cost = "";
-        requiredResources.ForEach(resource => cost += "\n" + resource.ToString());
-
-        return cost;
-    }
-}
-
 public class Building : MonoBehaviour
 {
     [SerializeField] protected Cost cost = new Cost();
@@ -26,22 +12,19 @@ public class Building : MonoBehaviour
     protected List<AIController> agents = new List<AIController>();
     protected bool isOverlapping = false;
 
-    private bool isPlaced = false;
-    private ResourceManager resourceManager = null;
+    private ResourceManager resourceManager;
     private NavMeshObstacle navMeshObstacle;
 
-    public bool IsPlaced { get => isPlaced; }
-
-    private void Start()
-    {
-        Init();
-    }
+    public bool IsPlaced { get ; private set; }
+    public Cost Cost { get => cost; }
+    public Vector3 Entrance { get => entrance.transform.position; }
 
     public static Building CreateBuilding(Building prefab, ResourceManager resourceManager, string name)
     {
         Building newBuilding = Instantiate(prefab);
         newBuilding.resourceManager = resourceManager;
         newBuilding.name = name;
+        newBuilding.Init();
 
         return newBuilding;
     }
@@ -57,10 +40,9 @@ public class Building : MonoBehaviour
         agent.StartTask(GetTask(agent));
     }
 
-    public virtual void RemoveAgent(AIController agent)
+    public virtual void RemoveSpecificAgent(AIController agent)
     {
-        agents.Remove(agent);
-        agent.EndTask();
+        RemoveAgent(agent);
     }
 
     public virtual AIController RemoveLastAgent()
@@ -69,10 +51,18 @@ public class Building : MonoBehaviour
             return null;
 
         AIController lastAgent = agents[agents.Count - 1];
-        agents.Remove(lastAgent);
-        lastAgent.EndTask();
+        RemoveAgent(lastAgent);
 
         return lastAgent;
+    }
+
+    public virtual void RemoveAgentAt(int index)
+    {
+        if (index >= 0 && index < agents.Count)
+        {
+            AIController agent = agents[index];
+            RemoveAgent(agent);
+        }
     }
 
     protected virtual void Init()
@@ -83,21 +73,17 @@ public class Building : MonoBehaviour
         StartCoroutine(CheckOverlapRoutine());
     }
 
-    public Cost GetCost()
-    {
-        return cost;
-    }
-
-    public Vector3 GetEntrance()
-    {
-        return entrance.transform.position;
-    }
-
     public void Place()
     {
-        isPlaced = true;
+        IsPlaced = true;
         entrance.gameObject.SetActive(true);
         navMeshObstacle.enabled = true;
+    }
+
+    private void RemoveAgent(AIController agent)
+    {
+        agents.Remove(agent);
+        agent.EndTask();
     }
 
     private IEnumerator CheckOverlapRoutine()
@@ -105,7 +91,7 @@ public class Building : MonoBehaviour
         // OverlapBox is weird, it doesn't reproduce the exact scale of the object.
         float scaleMultiplier = 2.3f;
 
-        while (!isPlaced)
+        while (!IsPlaced)
         {
             List<Collider> colliders = Physics.OverlapBox(transform.position, transform.localScale * scaleMultiplier, Quaternion.identity).ToList();
             colliders.RemoveAll(collider => collider.gameObject.CompareTag("Terrain") || collider.gameObject == gameObject);
@@ -115,7 +101,5 @@ public class Building : MonoBehaviour
 
             yield return null;
         }
-
-        yield return null;
     }
 }

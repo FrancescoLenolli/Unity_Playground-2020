@@ -56,7 +56,5 @@ public class BuildingHighlighter : MonoBehaviour
 
             yield return null;
         }
-
-        yield return null;
     }
 }

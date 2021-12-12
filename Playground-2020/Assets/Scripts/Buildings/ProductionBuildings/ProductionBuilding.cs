@@ -24,9 +24,9 @@ public class ProductionBuilding : Building
         info.agentsEmployed.Add(agent);
     }
 
-    public override void RemoveAgent(AIController agent)
+    public override void RemoveSpecificAgent(AIController agent)
     {
-        base.RemoveAgent(agent);
+        base.RemoveSpecificAgent(agent);
         info.agentsEmployed.Remove(agent);
     }
 

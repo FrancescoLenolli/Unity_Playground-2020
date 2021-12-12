@@ -88,7 +88,7 @@ MonoBehaviour:
     maxProduction: 350
     name: 
     agentsEmployed: []
-  range: 5
+  range: 10
 --- !u!114 &7464993081404837118
 MonoBehaviour:
   m_ObjectHideFlags: 0

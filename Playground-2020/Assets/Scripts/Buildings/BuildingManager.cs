@@ -27,33 +27,7 @@ public class BuildingManager : MonoBehaviour
 
     private void Update()
     {
-        if (!agentManager.IsEnabled())
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (currentBuilding && currentBuilding.CanBePlaced())
-                    PlaceBuilding();
-            }
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                if (currentBuilding)
-                    RemoveBuilding();
-            }
-        }
-        else
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                HandleBuildingHighlight();
-            }
-
-            if (Input.GetMouseButtonDown(1))
-            {
-                if (!agentManager.SelectedAgent)
-                    RemoveBuildingEmployee();
-            }
-        }
+        HandleMouseActions();
 
         if (currentBuilding)
             MoveBuilding();
@@ -64,6 +38,28 @@ public class BuildingManager : MonoBehaviour
         currentBuilding = Instantiate(buildingPrefabs[index]);
         currentBuilding.name = buildingPrefabs[index].name;
         agentManager.Enable(false);
+    }
+
+    private void HandleMouseActions()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (agentManager.IsEnabled)
+                HandleBuildingHighlight();
+            else if (currentBuilding && currentBuilding.CanBePlaced())
+                PlaceBuilding();
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (agentManager.IsEnabled)
+            {
+                if (!agentManager.SelectedAgent)
+                    RemoveBuildingEmployee();
+            }
+            else if (currentBuilding)
+                RemoveBuilding();
+        }
     }
 
     private void InstantiateBuilding(object index)
@@ -87,26 +83,40 @@ public class BuildingManager : MonoBehaviour
         if (!hit.collider)
             return;
 
-        ProductionBuilding productionBuilding = hit.collider.GetComponent<ProductionBuilding>();
+        if (ShowProductionInfo(hit.collider))
+            return;
+
+        if (ShowHouseInfo(hit.collider))
+            return;
+    }
+
+    private bool ShowProductionInfo(Collider buildingCollider)
+    {
+        ProductionBuilding productionBuilding = buildingCollider.GetComponent<ProductionBuilding>();
         if (productionBuilding && productionBuildings.Contains(productionBuilding) && !isBuildingHighlighted)
         {
             MessagingSystem.TriggerEvent("ShowBuildingInfo", productionBuilding.Info);
             isBuildingHighlighted = true;
-            return;
+            return true;
         }
+        else return false;
+    }
 
-        House house = hit.collider.GetComponent<House>();
+    private bool ShowHouseInfo(Collider houseCollider)
+    {
+        House house = houseCollider.GetComponent<House>();
         if (house && houses.Contains(house) && !isBuildingHighlighted)
         {
             MessagingSystem.TriggerEvent("ShowBuildingInfo", house);
             isBuildingHighlighted = true;
-            return;
+            return true;
         }
+        else return false;
     }
 
     private void PlaceBuilding()
     {
-        resourceManager.BuyItem(currentBuilding.GetCost());
+        resourceManager.BuyItem(currentBuilding.Cost);
         AddBuilding(currentBuilding);
         currentBuilding.Place();
         currentBuilding = null;

@@ -22,7 +22,7 @@ public class UIView_BuildingsMenu_Main : UIView
             int index = i;
             Button newButton = Instantiate(buttonPrefab, buttonsContainer);
             newButton.onClick.AddListener(() => { SelectBuilding(index); });
-            newButton.GetComponentInChildren<TextMeshProUGUI>().text = $"{buildings[i].name}\n{buildings[i].GetCost()}";
+            newButton.GetComponentInChildren<TextMeshProUGUI>().text = $"{buildings[i].name}\n{buildings[i].Cost}";
         }
     }
 

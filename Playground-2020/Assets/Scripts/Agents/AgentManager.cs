@@ -12,12 +12,12 @@ public class AgentManager : MonoBehaviour
     [SerializeField] private BuildingManager buildingManager = null;
 
     private List<AIController> agents = new List<AIController>();
-    private AIController selectedAgent = null;
     private bool isEnabled = true;
     private int maxAgentsCapacity;
     private int currentSpawnCounter = 0;
 
-    public AIController SelectedAgent { get => selectedAgent; }
+    public AIController SelectedAgent { get; private set; }
+    public bool IsEnabled { get => isEnabled; }
 
     private void Awake()
     {
@@ -30,8 +30,10 @@ public class AgentManager : MonoBehaviour
         if (!isEnabled)
             return;
 
-        AgentSelection();
-        TargetSelection();
+        if (Input.GetMouseButtonDown(0))
+            AgentSelection();
+        if (Input.GetMouseButtonDown(1))
+            TargetSelection();
     }
 
     public void Enable(bool isEnabled)
@@ -40,11 +42,6 @@ public class AgentManager : MonoBehaviour
 
         if (!this.isEnabled)
             DeselectAgent();
-    }
-
-    public bool IsEnabled()
-    {
-        return isEnabled;
     }
 
     public void AddAgent(AIController agent)
@@ -59,7 +56,7 @@ public class AgentManager : MonoBehaviour
 
     public void TryDeselectAgent(AIController agent)
     {
-        if (agent == selectedAgent)
+        if (agent == SelectedAgent)
             DeselectAgent();
     }
 
@@ -72,6 +69,7 @@ public class AgentManager : MonoBehaviour
         }
     }
 
+    // Spawn new Agent if conditions are met.
     private void UpdateAgents()
     {
         int newMaxCapacity = 0;
@@ -79,7 +77,7 @@ public class AgentManager : MonoBehaviour
         maxAgentsCapacity = newMaxCapacity;
         currentSpawnCounter += maxAgentsCapacity;
 
-        if(currentSpawnCounter >= spawnCounter)
+        if (currentSpawnCounter >= spawnCounter)
         {
             currentSpawnCounter = 0;
             InstantiateAgent();
@@ -102,81 +100,68 @@ public class AgentManager : MonoBehaviour
 
     private void AgentSelection()
     {
-        if (Input.GetMouseButtonDown(0))
+        RaycastHit hit = Utils.GetMouseWorldPoint();
+        if (!hit.collider)
+            return;
+
+        AIController agent = hit.collider.GetComponent<AIController>();
+        HandleAgentSelection(agent);
+    }
+
+    private void HandleAgentSelection(AIController agent)
+    {
+        if (!agent || agent.IsEmployed)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (!Physics.Raycast(ray, out hit))
+            if (SelectedAgent)
+            {
+                DeselectAgent();
                 return;
-
-            AIController agent = hit.collider.GetComponent<AIController>();
-
-            if (!agent || agent.IsEmployed)
-            {
-                if (selectedAgent)
-                {
-                    DeselectAgent();
-                    return;
-                }
             }
-            else
+        }
+        else
+        {
+            /*if there's already a selected agent,
+             * deselect the last one and select the new one.*/
+            if (SelectedAgent && agent != SelectedAgent)
             {
-
-                /*if there's already a selected agent,
-                 * deselect the last one and select the new one.*/
-                if (selectedAgent && agent != selectedAgent)
-                {
-                    DeselectAgent();
-                    SelectAgent(agent);
-                    return;
-                }
-
-                if (!selectedAgent)
-                    SelectAgent(agent);
+                DeselectAgent();
+                SelectAgent(agent);
+                return;
             }
 
+            if (!SelectedAgent)
+                SelectAgent(agent);
         }
     }
 
     private void TargetSelection()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (!selectedAgent)
-                return;
+        if (!SelectedAgent)
+            return;
 
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+        RaycastHit hit = Utils.GetMouseWorldPoint();
+        if (!hit.collider)
+            return;
 
-            if (!Physics.Raycast(ray, out hit))
-                return;
-
-            Building building = hit.collider.GetComponent<Building>();
-            if (building)
-            {
-                if(building.CanEnter())
-                    selectedAgent.GoTo(building);
-            }
-            else
-            {
-                selectedAgent.GoTo(hit.point);
-            }
-        }
+        Building building = hit.collider.GetComponent<Building>();
+        if (building && building.CanEnter())
+                SelectedAgent.GoTo(building);
+        else
+            SelectedAgent.GoTo(hit.point);
     }
 
     private void SelectAgent(AIController agent)
     {
         //Use a small object to highlight the selected agent.
 
-        selectedAgent = agent;
-        highlighter.parent = selectedAgent.transform;
-        highlighter.position = new Vector3(selectedAgent.transform.position.x, 0.005f, selectedAgent.transform.position.z);
+        SelectedAgent = agent;
+        highlighter.parent = SelectedAgent.transform;
+        highlighter.position = new Vector3(SelectedAgent.transform.position.x, 0.005f, SelectedAgent.transform.position.z);
     }
 
     public void DeselectAgent()
     {
-        selectedAgent = null;
+        SelectedAgent = null;
         highlighter.parent = transform;
         highlighter.position = new Vector3(0, -20, 0);
     }

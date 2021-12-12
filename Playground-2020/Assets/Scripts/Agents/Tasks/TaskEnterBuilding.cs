@@ -25,7 +25,7 @@ public class TaskEnterBuilding : Task
     private void ExitBuilding()
     {
         agent.gameObject.SetActive(true);
-        agent.transform.position = building.GetEntrance() - building.transform.forward * 3;
+        agent.transform.position = building.Entrance - building.transform.forward * 3;
         agent.transform.parent = null;
     }
 }
