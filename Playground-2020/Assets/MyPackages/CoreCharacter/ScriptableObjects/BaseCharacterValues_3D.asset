@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputType: 0
   speed: 5
-  jumpForce: 12
-  gravityScale: 4
+  jumpForce: 2
+  gravityScale: 1
+  movementWithAcceleration: 0

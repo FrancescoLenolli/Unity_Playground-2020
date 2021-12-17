@@ -4,12 +4,12 @@ using UnityEngine.Events;
 
 public class UnityObjectEvent : UnityEvent<object> { }
 
-public class MyMessaggingSystem : MonoBehaviour
+public class EventManager : MonoBehaviour
 {
-    private static MyMessaggingSystem eventManager;
+    private static EventManager eventManager;
     private Dictionary<string, UnityObjectEvent> eventDictionary;
 
-    public static MyMessaggingSystem Instance { get { return GetInstance(); } }
+    public static EventManager Instance { get { return GetInstance(); } }
 
     public static void StartListening(string eventName, UnityAction<object> listener)
     {
@@ -43,11 +43,11 @@ public class MyMessaggingSystem : MonoBehaviour
             thisEvent.Invoke(argument);
     }
 
-    private static MyMessaggingSystem GetInstance()
+    private static EventManager GetInstance()
     {
         if (eventManager) return eventManager;
 
-        eventManager = FindObjectOfType<MyMessaggingSystem>();
+        eventManager = FindObjectOfType<EventManager>();
         if (!eventManager)
             Debug.LogError("There needs to be one active EventManager script on a GameObject in your Scene!");
         else

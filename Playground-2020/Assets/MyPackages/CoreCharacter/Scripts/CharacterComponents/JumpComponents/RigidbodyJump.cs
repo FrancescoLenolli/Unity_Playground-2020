@@ -6,11 +6,11 @@ namespace CoreCharacter
     public class RigidbodyJump : JumpComponent
     {
         private new Rigidbody rigidbody;
+        private CapsuleCollider capsuleCollider;
 
         private void FixedUpdate()
         {
             ScaleGravity();
-            HandleJump();
         }
 
         public override void SetUp(CharacterControl character)
@@ -18,35 +18,33 @@ namespace CoreCharacter
             base.SetUp(character);
 
             rigidbody = CharacterUtilities.TryGetComponent<Rigidbody>(character.gameObject);
+            capsuleCollider = character.GetComponent<CapsuleCollider>();
             rigidbody.freezeRotation = true;
-            rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
-            characterValues = character.characterValues;
-        }
-
-        protected override void HandleJump()
-        {
-            bool alreadyJumped = isJumping && canJump && rigidbody.useGravity;
-
-            if (canJump)
-            {
-                Jump();
-            }
-            else if (alreadyJumped)
-            {
-                isJumping = false;
-            }
+            rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
         }
 
         protected override void Jump()
         {
+            if (!canJump)
+                return;
+
             rigidbody.AddForce(Vector3.up * characterValues.jumpForce, ForceMode.Impulse);
-            isJumping = true;
             canJump = false;
+        }
+
+        protected override bool CanJump()
+        {
+            return isGrounded;
         }
 
         protected override bool IsGrounded()
         {
-            return CharacterUtilities.IsGrounded(GetComponent<CapsuleCollider>());
+            return CharacterUtilities.IsGrounded(capsuleCollider);
+        }
+
+        protected override bool IsFalling()
+        {
+            return rigidbody.velocity.y < 0;
         }
 
         /// <summary>
@@ -55,7 +53,9 @@ namespace CoreCharacter
         /// </summary>
         private void ScaleGravity()
         {
-            rigidbody.AddForce(Physics.gravity * (characterValues.gravityScale - 1) * rigidbody.mass);
+            // Doubles gravity when falling down to fall faster. Prevents weird floating motions.
+            float gravityScale = IsFalling() ? characterValues.gravityScale * 2 : characterValues.gravityScale;
+            rigidbody.AddForce(Physics.gravity * (gravityScale - 1) * rigidbody.mass);
         }
     }
 }

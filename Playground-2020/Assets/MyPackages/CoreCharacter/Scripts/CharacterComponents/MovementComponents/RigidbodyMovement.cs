@@ -16,6 +16,8 @@ namespace CoreCharacter
 
         public override void Move(Vector3 movementInput)
         {
+            base.Move(movementInput);
+
             Vector3 velocity = characterValues.speed * Time.fixedDeltaTime * movementInput;
             Vector3 newPosition = transform.position + velocity;
 
