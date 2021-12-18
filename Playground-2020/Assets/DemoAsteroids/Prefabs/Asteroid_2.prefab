@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -6010288074938891043}
   - component: {fileID: 4915179841935199738}
   - component: {fileID: 2279509400366070343}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Asteroid_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0762206683e20634ab1f6034c84830f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedLimits: {x: 100, y: 150}
+  speedRange: {x: 100, y: 200}
+  startingVelocityRange: {x: 5, y: 10}
 --- !u!1001 &2446253509771816691
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -86,6 +87,10 @@ PrefabInstance:
     - target: {fileID: 188592, guid: bcd44f8d0f766b340b72d555a8df8a72, type: 3}
       propertyPath: m_Name
       value: Rock Type6 02
+      objectReference: {fileID: 0}
+    - target: {fileID: 188592, guid: bcd44f8d0f766b340b72d555a8df8a72, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 466372, guid: bcd44f8d0f766b340b72d555a8df8a72, type: 3}
       propertyPath: m_RootOrder
