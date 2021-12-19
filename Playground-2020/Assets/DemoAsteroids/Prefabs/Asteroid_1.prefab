@@ -75,8 +75,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0762206683e20634ab1f6034c84830f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedRange: {x: 100, y: 200}
-  startingVelocityRange: {x: 5, y: 10}
+  speedRange: {x: 10, y: 15}
+  startingVelocityRange: {x: 5, y: 8}
 --- !u!1001 &2266697878746683743
 PrefabInstance:
   m_ObjectHideFlags: 0

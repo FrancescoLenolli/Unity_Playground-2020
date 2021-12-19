@@ -11,7 +11,7 @@ namespace DemoAsteroids
         private new Rigidbody rigidbody;
         private ObjectPool<Asteroid> objectPool = new ObjectPool<Asteroid>();
         private float speed;
-        private Vector3 direction;
+        private Vector3 direction = Vector3.zero;
         private float startingHeight;
         private bool canMove = false;
 
@@ -39,10 +39,12 @@ namespace DemoAsteroids
         private void FixedUpdate()
         {
             if (canMove)
-                rigidbody.AddForce(speed * Time.fixedDeltaTime * direction, ForceMode.Force);
+            {
+                rigidbody.AddForce(speed * Time.fixedDeltaTime * direction, ForceMode.VelocityChange);
+            }
         }
 
-        public void Init(ObjectPool<Asteroid> objectPool, Vector3 startingPosition)
+        public void Init(ObjectPool<Asteroid> objectPool, Vector3 startingPosition, Vector3 targetPosition)
         {
             if (this.objectPool != objectPool)
                 this.objectPool = objectPool;
@@ -50,14 +52,16 @@ namespace DemoAsteroids
             transform.position = startingPosition;
             startingHeight = transform.position.y;
             speed = Random.Range(speedRange.x, speedRange.y);
-            Vector3 randomPositionInsideCamera = Camera.main.ScreenToWorldPoint
-                (new Vector3(Random.Range(0, Screen.width), Random.Range(0, Screen.height), Camera.main.farClipPlane / 2));
 
-            direction = (randomPositionInsideCamera - transform.position).normalized;
+            direction = (targetPosition - transform.position).normalized;
             direction = new Vector3(direction.x, 0, direction.z);
 
-            canMove = true;
+            Vector3 randomTorque = 
+                new Vector3 (Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+            rigidbody.AddTorque(randomTorque * 2f);
+
             rigidbody.isKinematic = false;
+            canMove = true;
         }
     }
 }
