@@ -12,18 +12,18 @@ namespace CoreCharacter
         private Action onActionJump;
         private Action onAction1;
         private Action onAction2;
-        private Action onContinuousActionJump;
-        private Action onContinuousAction1;
-        private Action onContinuousAction2;
+        private Action<bool> onContinuousActionJump;
+        private Action<bool> onContinuousAction1;
+        private Action<bool> onContinuousAction2;
 
         public Action<Vector3> OnActionMove { get => onMovementInput; set => onMovementInput = value; }
         public Action<Vector2> OnActionRotate { get => onRotationInput; set => onRotationInput = value; }
         public Action OnActionJump { get => onActionJump; set => onActionJump = value; }
         public Action OnAction1 { get => onAction1; set => onAction1 = value; }
         public Action OnAction2 { get => onAction2; set => onAction2 = value; }
-        public Action OnContinuousActionJump { get => onContinuousActionJump; set => onContinuousActionJump = value; }
-        public Action OnContinuousAction1 { get => onContinuousAction1; set => onContinuousAction1 = value; }
-        public Action OnContinuousAction2 { get => onContinuousAction2; set => onContinuousAction2 = value; }
+        public Action<bool> OnContinuousActionJump { get => onContinuousActionJump; set => onContinuousActionJump = value; }
+        public Action<bool> OnContinuousAction1 { get => onContinuousAction1; set => onContinuousAction1 = value; }
+        public Action<bool> OnContinuousAction2 { get => onContinuousAction2; set => onContinuousAction2 = value; }
 
         private void Update()
         {
@@ -62,6 +62,11 @@ namespace CoreCharacter
         {
             if (check)
                 action?.Invoke();
+        }
+
+        private void HandleAction(bool check, Action<bool> action)
+        {
+            action?.Invoke(check);
         }
 
         private Vector2 GetMoveInput()

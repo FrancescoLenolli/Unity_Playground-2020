@@ -574,6 +574,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawner
       objectReference: {fileID: 0}
+    - target: {fileID: 1748011189702695576, guid: 32041683fef8d1a4fb58fbe380659f9d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1748011189702695581, guid: 32041683fef8d1a4fb58fbe380659f9d,
         type: 3}
       propertyPath: m_RootOrder
@@ -658,11 +663,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8389733303222166635, guid: 3cfb983bcb02aea47bd8d179bba27b99,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8389733303222166636, guid: 3cfb983bcb02aea47bd8d179bba27b99,
         type: 3}
       propertyPath: m_RootOrder
@@ -718,10 +718,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8389733303222166637, guid: 3cfb983bcb02aea47bd8d179bba27b99,
+    - target: {fileID: 8977941393915652774, guid: 3cfb983bcb02aea47bd8d179bba27b99,
         type: 3}
-      propertyPath: m_Constraints
-      value: 4
+      propertyPath: fireRate
+      value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 8977941393915652774, guid: 3cfb983bcb02aea47bd8d179bba27b99,
+        type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 7556209076707438294, guid: 8859bf08ae6d2194cbea13a3878b8b95,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cfb983bcb02aea47bd8d179bba27b99, type: 3}

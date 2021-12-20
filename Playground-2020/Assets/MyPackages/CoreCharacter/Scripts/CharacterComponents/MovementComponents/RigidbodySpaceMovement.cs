@@ -1,6 +1,4 @@
 ﻿using CoreCharacter.Utilities;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace CoreCharacter
@@ -27,9 +25,10 @@ namespace CoreCharacter
             character.inputComponent.OnContinuousActionJump += SetThrust;
         }
 
-        private void SetThrust()
+        protected virtual void SetThrust(bool canThrust)
         {
-            rigidbody.AddForce(characterValues.speed * Time.fixedDeltaTime * GetThrustDirection(), ForceMode.Force);
+            if (canThrust)
+                rigidbody.AddForce(characterValues.speed * Time.fixedDeltaTime * GetThrustDirection(), ForceMode.Force);
         }
 
         private void ClampVelocity()
@@ -40,7 +39,7 @@ namespace CoreCharacter
 
         private Vector3 GetThrustDirection()
         {
-            switch(thrustDirection)
+            switch (thrustDirection)
             {
                 case ThrustDirection.Forward:
                     return transform.forward;
