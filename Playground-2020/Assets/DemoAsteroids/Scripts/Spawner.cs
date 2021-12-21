@@ -14,6 +14,7 @@ namespace DemoAsteroids
         [SerializeField] private bool randomSpawn = true;
         [SerializeField] private Transform objectPoolContainer = null;
         [SerializeField] private Transform player = null;
+        [SerializeField] private bool canSpawn = true;
 
         private Action<Vector3> actionSpawn;
         private List<ObjectPool<Asteroid>> objectPools = new List<ObjectPool<Asteroid>>();
@@ -80,11 +81,14 @@ namespace DemoAsteroids
 
             while(true)
             {
-                currentTimer -= Time.deltaTime;
-                if(currentTimer <= 0f)
+                if (canSpawn)
                 {
-                    SpawnAtRandomPosition();
-                    currentTimer = spawnTime;
+                    currentTimer -= Time.deltaTime;
+                    if (currentTimer <= 0f)
+                    {
+                        SpawnAtRandomPosition();
+                        currentTimer = spawnTime;
+                    }
                 }
 
                 yield return null;

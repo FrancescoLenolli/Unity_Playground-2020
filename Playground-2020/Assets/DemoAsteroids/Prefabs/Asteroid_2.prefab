@@ -77,6 +77,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedRange: {x: 10, y: 15}
   startingVelocityRange: {x: 5, y: 8}
+  explosionParticlePrefab: {fileID: 191186, guid: 079954accd64b32419ec069129c81273,
+    type: 3}
 --- !u!1001 &2446253509771816691
 PrefabInstance:
   m_ObjectHideFlags: 0

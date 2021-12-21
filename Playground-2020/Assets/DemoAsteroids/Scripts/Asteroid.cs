@@ -1,3 +1,4 @@
+using CoreCharacter;
 using ObjectPool;
 using UnityEngine;
 
@@ -5,11 +6,13 @@ namespace DemoAsteroids
 {
     public class Asteroid : MonoBehaviour
     {
-        [SerializeField] Vector2 speedRange = Vector2.one;
-        [SerializeField] Vector2 startingVelocityRange = Vector2.one;
+        [SerializeField] private Vector2 speedRange = Vector2.one;
+        [SerializeField] private Vector2 startingVelocityRange = Vector2.one;
+        [SerializeField] private GameObject explosionParticlePrefab = null;
 
         private new Rigidbody rigidbody;
-        private ObjectPool<Asteroid> objectPool = new ObjectPool<Asteroid>();
+        private new Collider collider;
+        private ObjectPool<Asteroid> objectPool = null;
         private float speed;
         private Vector3 direction = Vector3.zero;
         private float startingHeight;
@@ -18,6 +21,8 @@ namespace DemoAsteroids
         private void Awake()
         {
             rigidbody = GetComponent<Rigidbody>();
+            collider = GetComponent<Collider>();
+            SetMove(false);
         }
 
         private void Update()
@@ -30,9 +35,7 @@ namespace DemoAsteroids
 
             if (transform.position.magnitude >= 150f)
             {
-                canMove = false;
-                rigidbody.isKinematic = true;
-                objectPool.CollectItem(this);
+                Dispose();
             }
         }
 
@@ -41,6 +44,27 @@ namespace DemoAsteroids
             if (canMove)
             {
                 rigidbody.AddForce(speed * Time.fixedDeltaTime * direction, ForceMode.VelocityChange);
+            }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (!collision.gameObject)
+                return;
+
+            CharacterControl player = collision.gameObject.GetComponent<CharacterControl>();
+            if (player)
+            {
+                //player.gameObject.SetActive(false);
+                return;
+            }
+
+            Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+            if (bullet)
+            {
+                Destroy(bullet.gameObject);
+                Instantiate(explosionParticlePrefab, transform.position, explosionParticlePrefab.transform.rotation);
+                Dispose();
             }
         }
 
@@ -56,12 +80,24 @@ namespace DemoAsteroids
             direction = (targetPosition - transform.position).normalized;
             direction = new Vector3(direction.x, 0, direction.z);
 
-            Vector3 randomTorque = 
-                new Vector3 (Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+            Vector3 randomTorque =
+                new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
             rigidbody.AddTorque(randomTorque * 2f);
 
-            rigidbody.isKinematic = false;
-            canMove = true;
+            SetMove(true);
+        }
+
+        private void SetMove(bool canMove)
+        {
+            this.canMove = canMove;
+            collider.enabled = canMove;
+            rigidbody.isKinematic = !canMove;
+        }
+
+        private void Dispose()
+        {
+            SetMove(false);
+            objectPool?.CollectItem(this);
         }
     }
 }
