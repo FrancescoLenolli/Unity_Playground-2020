@@ -1,5 +1,6 @@
 using DemoRTS.Resources;
 using Messaging;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UIFramework.StateMachine;
@@ -22,7 +23,10 @@ namespace DemoRTS.UI
         private void UpdateResources(object resources)
         {
             List<Resource> updatedResources = (List<Resource>)resources;
-            view.UpdateResources(updatedResources);
+            DateTime now = DateTime.Now;
+            string notificationText = $"{now:HH:mm:ss}\nGathered Resources";
+
+            view.UpdateResources(updatedResources, notificationText);
         }
     }
 }
