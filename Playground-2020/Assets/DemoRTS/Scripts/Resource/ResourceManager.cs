@@ -1,4 +1,5 @@
 using DemoRTS.Buildings;
+using DemoRTS.UI;
 using Messaging;
 using System;
 using System.Collections.Generic;
@@ -70,6 +71,9 @@ namespace DemoRTS.Resources
                 resources[i].AddValue(totalProduction[i]);
 
             MessagingSystem.TriggerEvent("ResourcesUpdated", resources);
+
+            UINotificationInfo newNotification = new UINotificationInfo("Resources Gathered", false);
+            MessagingSystem.TriggerEvent("NotificationSent", newNotification);
         }
     }
 }

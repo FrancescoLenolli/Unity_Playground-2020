@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Events;
 
 namespace Messaging
@@ -17,7 +15,16 @@ namespace Messaging
 
             if (objectEventDictionary.TryGetValue(eventName, out thisEvent))
             {
-                thisEvent.AddListener(listener);
+                if (thisEvent != null)
+                {
+                    thisEvent.AddListener(listener);
+                }
+                else
+                {
+                    thisEvent = new UnityObjectEvent();
+                    thisEvent.AddListener(listener);
+                    objectEventDictionary[eventName] = thisEvent;
+                }
             }
             else
             {

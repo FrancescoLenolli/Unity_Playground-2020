@@ -9,6 +9,11 @@ public class LegacyInputDetection : MonoBehaviour
 
     private void Update()
     {
+        //DetectKey();
+    }
+
+    private void DetectKey()
+    {
         if (Input.anyKeyDown)
         {
             foreach (KeyCode keyCode in keyCodes)

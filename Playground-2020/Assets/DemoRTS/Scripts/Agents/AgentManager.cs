@@ -1,4 +1,5 @@
 using DemoRTS.Buildings;
+using DemoRTS.UI;
 using Messaging;
 using System.Collections.Generic;
 using UnityEngine;
@@ -99,6 +100,9 @@ namespace DemoRTS.Agents
             Vector3 randomPoint = new Vector3(randomX, 0, randomZ);
             AIController agent = Instantiate(agentPrefab, spawnPoint.position + randomPoint, Quaternion.identity);
             AddAgent(agent);
+
+            UINotificationInfo newNotification = new UINotificationInfo("New Agent Spawned", true);
+            MessagingSystem.TriggerEvent("NotificationSent", newNotification);
         }
 
         private void AgentSelection()

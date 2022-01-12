@@ -15,13 +15,18 @@ public class UINotification : MonoBehaviour
         StartCoroutine(ShowNotificationRoutine(text));
     }
 
+    public void DestroyNotification()
+    {
+        Destroy(gameObject);
+    }
+
     private IEnumerator ShowNotificationRoutine(string text)
     {
         label.text = text;
         canvasGroup.DOFade(1, animationTime);
         transform.DOScale(Vector3.one, animationTime);
 
-        yield return new WaitForSeconds(animationTime * 3);
+        yield return new WaitForSeconds(60);
 
         Destroy(gameObject);
 

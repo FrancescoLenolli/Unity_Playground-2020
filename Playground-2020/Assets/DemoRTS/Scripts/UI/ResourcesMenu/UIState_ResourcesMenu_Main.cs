@@ -18,15 +18,14 @@ namespace DemoRTS.UI
             ResourceManager resourceManager = root.resourceManager;
             view = root.mainView;
             MessagingSystem.StartListening("ResourcesUpdated", UpdateResources);
+            MessagingSystem.StartListening("NotificationSent", view.GetNotification);
         }
 
         private void UpdateResources(object resources)
         {
             List<Resource> updatedResources = (List<Resource>)resources;
-            DateTime now = DateTime.Now;
-            string notificationText = $"{now:HH:mm:ss}\nGathered Resources";
 
-            view.UpdateResources(updatedResources, notificationText);
+            view.UpdateResources(updatedResources);
         }
     }
 }
